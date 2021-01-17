@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>833</width>
+    <height>649</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QComboBox" name="comboBox">
+        <item>
+         <property name="text">
+          <string>上证</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>深圳成指</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="searchEdit"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>添加</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="normalBtn">
+        <property name="text">
+         <string>默认</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="detailedBtn">
+        <property name="text">
+         <string>详细</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="myBtn">
+        <property name="text">
+         <string>我的</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="addMyBtn">
+        <property name="text">
+         <string>添加我的持股</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <widget class="QTableWidget" name="miniTable">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+      <attribute name="horizontalHeaderMinimumSectionSize">
+       <number>50</number>
+      </attribute>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>150</number>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>名称</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>最新</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>涨跌</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>涨幅</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QTableWidget" name="tableWidget">
+      <row>
+       <property name="text">
+        <string/>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>名称</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>代码</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>今日开</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>昨日收</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>当前价格</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>今日最高</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>今日最低</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>日期</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>时间</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QTableWidget" name="myTable">
+      <column>
+       <property name="text">
+        <string>名称</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>持有手</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>成本</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>当前</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>历史总</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>今日</string>
+       </property>
+      </column>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>833</width>
+     <height>23</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
