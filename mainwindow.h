@@ -57,7 +57,7 @@ private:
     QTimer * m_timer{nullptr};
     QMutex* m_mutex{nullptr};
     QString m_currentZQ="sh";
-    QSqlDatabase m_db;
+//    QSqlDatabase m_db;
 };
 
 #endif // MAINWINDOW_H

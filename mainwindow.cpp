@@ -18,6 +18,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 
+#include <application.h>
 #include <addmoneywidget.h>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -52,7 +53,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::initDB()
 {
-    m_db=QSqlDatabase::addDatabase("QSQLITE");
+    App->m_db=QSqlDatabase::addDatabase("QSQLITE");
     QFile file("test.db");
     if(file.exists())
     {
@@ -62,16 +63,16 @@ void MainWindow::initDB()
         file.open( QIODevice::ReadWrite | QIODevice::Text );
         file.close();
     }
-    m_db.setDatabaseName("test.db");
+    App->m_db.setDatabaseName("test.db");
 
     //打开数据库
-    if (! m_db.isValid()) {
-        QMessageBox::warning(this, "错误", m_db.lastError().text());
+    if (! App->m_db.isValid()) {
+        QMessageBox::warning(this, "错误", App->m_db.lastError().text());
         return;
     }
-    if(!m_db.open())
+    if(!App->m_db.open())
     {
-        QMessageBox::warning(this, "错误", m_db.lastError().text());
+        QMessageBox::warning(this, "错误", App->m_db.lastError().text());
         return;
     }
     QSqlQuery querycreate;
@@ -123,8 +124,8 @@ void MainWindow::sendData()
 
 void MainWindow::addGP(const QString &str)
 {
-    if(m_db.isValid()){
-        QSqlQuery query(m_db);
+    if(App->m_db.isValid()){
+        QSqlQuery query(App->m_db);
         //占位符 : + 自定义名字
         query.prepare("insert into myData(code) values(:code)");
         query.bindValue(":code", str);
@@ -136,8 +137,8 @@ void MainWindow::addGP(const QString &str)
 void MainWindow::removeGP(const QString &str)
 {
 
-    if(m_db.isValid()){
-        QSqlQuery query(m_db);
+    if(App->m_db.isValid()){
+        QSqlQuery query(App->m_db);
         QString queryStr=QString("delete from myData where code=\"%1\" ").arg(str);
 
         //        query.prepare("delete from myData where code=:code");
@@ -289,7 +290,7 @@ void MainWindow::on_miniTable_doubleClicked(const QModelIndex &index)
     if(ui->miniTable->currentRow()>=0){
         QString code=ui->miniTable->item(ui->miniTable->currentRow(),0)->data(1).toString();
         if(!code.isEmpty()){
-//            removeGP(code);
+            removeGP(code);
         }
     }
 }
