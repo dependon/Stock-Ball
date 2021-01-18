@@ -1,6 +1,7 @@
 #include "application.h"
 
-application::application()
+application::application(int &argc, char **argv):
+      QApplication(argc,argv)
 {
 
 }

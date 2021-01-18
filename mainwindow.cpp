@@ -16,6 +16,8 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QFileInfo>
+
 #include <addmoneywidget.h>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -51,7 +53,16 @@ MainWindow::~MainWindow()
 void MainWindow::initDB()
 {
     m_db=QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName("../IConTest/test.db");
+    QFile file("test.db");
+    if(file.exists())
+    {
+        qDebug()<<"文件存在";
+    }else{
+        qDebug()<<"文件不存在,正在新建文件.";
+        file.open( QIODevice::ReadWrite | QIODevice::Text );
+        file.close();
+    }
+    m_db.setDatabaseName("test.db");
 
     //打开数据库
     if (! m_db.isValid()) {
@@ -63,6 +74,9 @@ void MainWindow::initDB()
         QMessageBox::warning(this, "错误", m_db.lastError().text());
         return;
     }
+    QSqlQuery querycreate;
+    querycreate.exec("CREATE TABLE IF NOT EXISTS myData(code Text primary key)");
+    querycreate.exec("CREATE TABLE IF NOT EXISTS haveData(code Text primary key,number INTEGER)");
     QSqlQuery query;
     query.exec("select * from myData");
 

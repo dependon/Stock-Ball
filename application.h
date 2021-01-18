@@ -1,12 +1,13 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 #include <QApplication>
-
-class application:public Application
+#include <QCoreApplication>
+#define App (static_cast<Application*>(QCoreApplication::instance()))
+class application:public QApplication
 {
     Q_OBJECT
 public:
-    application();
+    application(int& argc, char **argv);
 };
 
 #endif // APPLICATION_H
