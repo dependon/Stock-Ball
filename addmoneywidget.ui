@@ -42,13 +42,6 @@
      </item>
     </layout>
    </item>
-   <item row="6" column="1">
-    <widget class="QPushButton" name="setBtn">
-     <property name="text">
-      <string>配置</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
@@ -118,7 +111,7 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>购买时几手</string>
+        <string>购买时股数</string>
        </property>
       </widget>
      </item>
@@ -131,6 +124,13 @@
     <widget class="QPushButton" name="cancelBtn">
      <property name="text">
       <string>取消</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QPushButton" name="setBtn">
+     <property name="text">
+      <string>配置</string>
      </property>
     </widget>
    </item>

@@ -80,11 +80,11 @@
       <property name="editTriggers">
        <set>QAbstractItemView::NoEditTriggers</set>
       </property>
-      <attribute name="horizontalHeaderMinimumSectionSize">
-       <number>50</number>
-      </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
        <number>150</number>
+      </attribute>
+      <attribute name="horizontalHeaderMinimumSectionSize">
+       <number>50</number>
       </attribute>
       <column>
        <property name="text">
@@ -171,27 +171,42 @@
       </column>
       <column>
        <property name="text">
-        <string>持有手</string>
+        <string>持有股数</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>成本</string>
+        <string>成本总价</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>当前</string>
+        <string>当前总价</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>历史总</string>
+        <string>当前单价</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>今日</string>
+        <string>历史营收</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>历史收益率</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>今日营收</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>今日收益率</string>
        </property>
       </column>
      </widget>
@@ -204,7 +219,7 @@
      <x>0</x>
      <y>0</y>
      <width>833</width>
-     <height>23</height>
+     <height>36</height>
     </rect>
    </property>
   </widget>

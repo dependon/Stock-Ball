@@ -11,7 +11,26 @@ struct DataGP{
     QString todayMin;
     QString Date;
     QString Time;
+    QString currentS;
 };
+struct DataHaveGP{
+    QString codec;
+    QString name;
+    int haveNum;
+    double payallPrice=0;
+    double currentPrice=0;
+    double currentallPrice=0;
+    double historySY=0;
+    double todaySY=0;
+    double yesterDayPrice=0;
+};
+
+struct DataAllDP{
+    double payallPrice=0;
+    double currentallPrice=0;
+    double todaySY=0;
+};
+
 class data
 {
 public:

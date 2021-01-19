@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include "data.h"
+class QNetworkAccessManager;
+class QNetworkReply;
 namespace Ui {
 class addMoneyWidget;
 }
@@ -16,6 +18,9 @@ public:
     ~addMoneyWidget();
     void setCodecData(QMap <QString,DataGP> gpMap);
 
+    void addGP();
+
+    void sendData();
 private slots:
     void on_minecodecBtn_clicked();
 
@@ -25,8 +30,14 @@ private slots:
 
     void on_setBtn_clicked();
 
+    void replyFinished(QNetworkReply *reply);
 private:
     Ui::addMoneyWidget *ui;
+
+    QNetworkAccessManager *manager {nullptr};
+    QNetworkReply *reply {nullptr};
+    DataGP currentData;
+
 };
 
 #endif // ADDMONEYWIDGET_H

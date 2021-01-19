@@ -29,9 +29,11 @@ public:
     void sendData();
     void addGP(const QString & str);
     void removeGP(const QString & str);
+    void sendData2();
 private slots:
     void on_pushButton_clicked();
     void replyFinished(QNetworkReply *reply);
+    void replyFinished2(QNetworkReply *reply);
     void updateData();
 
     void on_comboBox_activated(const QString &arg1);
@@ -52,10 +54,14 @@ private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *m_trayIcon{nullptr};
     QNetworkAccessManager *manager {nullptr};
+    QNetworkAccessManager *manager2 {nullptr};
     QNetworkReply *reply {nullptr};
+    QNetworkReply *reply2 {nullptr};
     QMap <QString,DataGP> m_mGp;
+    QMap <QString,DataHaveGP> m_mMyGp;
     QTimer * m_timer{nullptr};
-    QMutex* m_mutex{nullptr};
+
+    DataAllDP m_myAllDP;
     QString m_currentZQ="sh";
 //    QSqlDatabase m_db;
 };

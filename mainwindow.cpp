@@ -25,15 +25,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    m_mutex=new QMutex();
+
     m_trayIcon=new QSystemTrayIcon();
     m_trayIcon->setToolTip("test");
     m_trayIcon->show();
     initDB();
     //创建一个管理器
     manager = new QNetworkAccessManager(this);
+    manager2=new QNetworkAccessManager(this);
     //   reply = manager->get(request);
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+    connect(manager2, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished2(QNetworkReply*)));
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateData()));
     m_timer->start(1000);
@@ -45,8 +47,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete m_mutex;
-    m_mutex=nullptr;
 
     delete ui;
 }
@@ -77,7 +77,7 @@ void MainWindow::initDB()
     }
     QSqlQuery querycreate;
     querycreate.exec("CREATE TABLE IF NOT EXISTS myData(code Text primary key)");
-    querycreate.exec("CREATE TABLE IF NOT EXISTS haveData(code Text primary key,number INTEGER)");
+    querycreate.exec("CREATE TABLE IF NOT EXISTS haveData(code Text primary key,money Text,number INTEGER)");
     QSqlQuery query;
     query.exec("select * from myData");
 
@@ -87,6 +87,22 @@ void MainWindow::initDB()
         //以列为单位的     //第0列
         QString str= query.value(0).toString();
         m_mGp.insert(str,DataGP());
+    }
+
+    QSqlQuery query2;
+    query2.exec("select * from haveData");
+    while(query2.next()) //一行一行遍历
+    {
+        DataHaveGP gp;
+        //取出当前行的内容
+        //以列为单位的     //第0列
+        QString str= query2.value(0).toString();
+        QString str2= query2.value(1).toString();
+        int num= query2.value(2).toInt();
+        gp.codec=str;
+        gp.payallPrice=str2.toDouble();
+        gp.haveNum=num;
+        m_mMyGp.insert(str,gp);
     }
 }
 
@@ -121,7 +137,15 @@ void MainWindow::sendData()
         reply=manager->get(request);
     }
 }
-
+void MainWindow::sendData2()
+{
+    for(QString key:m_mMyGp.keys()){
+        QString bumStr="http://hq.sinajs.cn/list="+key;
+        QNetworkRequest request;
+        request.setUrl(QUrl(bumStr));
+        reply2=manager2->get(request);
+    }
+}
 void MainWindow::addGP(const QString &str)
 {
     if(App->m_db.isValid()){
@@ -163,7 +187,7 @@ void MainWindow::removeGP(const QString &str)
 //…、买5报价、…、卖5报价、日期、时间”。
 void MainWindow::replyFinished(QNetworkReply* reply)
 {
-    QMutexLocker locker(m_mutex);
+    QMutexLocker locker(App->m_mutex);
     QByteArray data = reply->readAll();
     QTextCodec *tc = QTextCodec::codecForName("GBK");
 
@@ -212,11 +236,63 @@ void MainWindow::replyFinished(QNetworkReply* reply)
     //        int status = JD.object().value("").toInt();
     qDebug()<<"xxx";
 }
+
+void MainWindow::replyFinished2(QNetworkReply *reply)
+{
+    QMutexLocker locker(App->m_mutex);
+    QByteArray data = reply->readAll();
+    QTextCodec *tc = QTextCodec::codecForName("GBK");
+
+    QString str = tc->toUnicode(data);//str如果是中文则是中文字符
+    str.remove("\n");
+
+    QList<QString> numList=str.split(";");
+    for(QString numStr:numList)
+    {
+        if(!numStr.isEmpty()){
+            QList<QString> strList=numStr.split(",");
+            DataGP gp;
+            if(strList.count()>31){
+                QStringList str1=strList.at(0).split("str_");
+                if(str1.count()==2){
+                    QString num=str1.at(1).mid(0,8);
+                    gp.codec=num;
+                    QStringList str2=str1.at(1).split('\"');
+                    if(str2.count()==2){
+                        QString name=str2.at(1);
+                        qDebug()<<name;
+                        gp.name=name;
+                    }
+                }
+                gp.TodayOpeningPrice=strList.at(1);
+                gp.YesterdayClosingPrice=strList.at(2);
+                gp.currentPrice=strList.at(3);
+                gp.todayMax=strList.at(4);
+                gp.todayMin=strList.at(5);
+                gp.Date=strList.at(30);
+                gp.Time=strList.at(31);
+                if(!gp.name.isEmpty() && !gp.codec.isEmpty()){
+
+                  DataHaveGP haveGp=  m_mMyGp.value(gp.codec);
+                  haveGp.name=gp.name;
+                  haveGp.currentPrice=gp.currentPrice.toDouble();
+                  haveGp.currentallPrice=gp.currentPrice.toDouble()*haveGp.haveNum;
+                  haveGp.todaySY=(gp.currentPrice.toDouble()-gp.YesterdayClosingPrice.toDouble())*haveGp.haveNum;
+                  haveGp.historySY=(haveGp.currentallPrice-haveGp.payallPrice);
+                  haveGp.yesterDayPrice=gp.YesterdayClosingPrice.toDouble();
+                  m_mMyGp.insert(gp.codec,haveGp);
+                }
+            }
+        }
+
+    }
+}
 void MainWindow::updateData()
 {
-    QMutexLocker locker(m_mutex);
+    QMutexLocker locker(App->m_mutex);
     if(m_mGp.count()>0){
         sendData();
+        sendData2();
         ui->tableWidget->setRowCount(m_mGp.count());
         ui->miniTable->setRowCount(m_mGp.count());
         int index=0;
@@ -271,6 +347,57 @@ void MainWindow::updateData()
         }
 
 
+
+    }
+    m_myAllDP=DataAllDP();
+    ui->myTable->setRowCount(m_mMyGp.count());
+    int index1=0;
+
+    for(auto gp:m_mMyGp){
+        ui->myTable->setItem(index1,0,new QTableWidgetItem(gp.name));
+
+        ui->myTable->setItem(index1,1,new QTableWidgetItem(QString::number(gp.haveNum)));
+        ui->myTable->setItem(index1,2,new QTableWidgetItem(QString::number(gp.payallPrice)));
+        ui->myTable->setItem(index1,3,new QTableWidgetItem(QString::number(gp.currentallPrice)));
+        ui->myTable->setItem(index1,4,new QTableWidgetItem(QString::number(gp.currentPrice)));
+        ui->myTable->setItem(index1,5,new QTableWidgetItem(QString::number(gp.historySY)));
+        double historySyl=100*gp.historySY/gp.payallPrice;
+
+
+        QString historyL=QString::number(historySyl)+"%";
+        ui->myTable->setItem(index1,6,new QTableWidgetItem(historyL));
+        if(historySyl>0){
+            ui->myTable->item(index1,5)->setTextColor(QColor("white"));
+            ui->myTable->item(index1,6)->setTextColor(QColor("white"));
+            ui->myTable->item(index1,5)->setBackground(QColor("red"));
+            ui->myTable->item(index1,6)->setBackground(QColor("red"));
+        }
+        else {
+            ui->myTable->item(index1,5)->setTextColor(QColor("white"));
+            ui->myTable->item(index1,6)->setTextColor(QColor("white"));
+            ui->myTable->item(index1,5)->setBackground(QColor("green"));
+            ui->myTable->item(index1,6)->setBackground(QColor("green"));
+        }
+        ui->myTable->setItem(index1,7,new QTableWidgetItem(QString::number(gp.todaySY)));
+        double todayyl=100*(gp.currentPrice-gp.yesterDayPrice)/gp.yesterDayPrice;
+        QString todayL=QString::number(todayyl)+"%";
+        ui->myTable->setItem(index1,8,new QTableWidgetItem(todayL));
+        if(todayyl>0){
+            ui->myTable->item(index1,7)->setTextColor(QColor("white"));
+            ui->myTable->item(index1,8)->setTextColor(QColor("white"));
+            ui->myTable->item(index1,7)->setBackground(QColor("red"));
+            ui->myTable->item(index1,8)->setBackground(QColor("red"));
+        }
+        else {
+            ui->myTable->item(index1,7)->setTextColor(QColor("white"));
+            ui->myTable->item(index1,8)->setTextColor(QColor("white"));
+            ui->myTable->item(index1,7)->setBackground(QColor("green"));
+            ui->myTable->item(index1,8)->setBackground(QColor("green"));
+        }
+        m_myAllDP.payallPrice+=gp.payallPrice;
+        m_myAllDP.currentallPrice+=gp.currentallPrice;
+        m_myAllDP.todaySY+=gp.todaySY;
+        index1++;
     }
 }
 
@@ -286,7 +413,7 @@ void MainWindow::on_comboBox_activated(const QString &arg1)
 
 void MainWindow::on_miniTable_doubleClicked(const QModelIndex &index)
 {
-    QMutexLocker locker(m_mutex);
+    QMutexLocker locker(App->m_mutex);
     if(ui->miniTable->currentRow()>=0){
         QString code=ui->miniTable->item(ui->miniTable->currentRow(),0)->data(1).toString();
         if(!code.isEmpty()){
@@ -304,17 +431,32 @@ void MainWindow::on_miniTable_itemDoubleClicked(QTableWidgetItem *item)
 
 void MainWindow::on_normalBtn_clicked()
 {
-
+    if(ui->miniTable->isVisible()){
+        ui->miniTable->setVisible(false);
+    }
+    else {
+        ui->miniTable->setVisible(true);
+    }
 }
 
 void MainWindow::on_detailedBtn_clicked()
 {
-
+    if(ui->tableWidget->isVisible()){
+        ui->tableWidget->setVisible(false);
+    }
+    else {
+        ui->tableWidget->setVisible(true);
+    }
 }
 
 void MainWindow::on_myBtn_clicked()
 {
-
+    if(ui->myTable->isVisible()){
+        ui->myTable->setVisible(false);
+    }
+    else {
+        ui->myTable->setVisible(true);
+    }
 }
 
 void MainWindow::on_addMyBtn_clicked()
