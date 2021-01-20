@@ -9,7 +9,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTextCodec>
-
+#include "signalm.h"
 addMoneyWidget::addMoneyWidget(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::addMoneyWidget)
@@ -36,7 +36,7 @@ void addMoneyWidget::setCodecData(QMap<QString, DataGP> gpMap)
 
 void addMoneyWidget::on_minecodecBtn_clicked()
 {
-    App->m_db;
+//    App->m_db;
     if(!ui->comboxCodec->currentText().isEmpty()){
         QString bumStr="http://hq.sinajs.cn/list="+ui->comboxCodec->currentText();
         QNetworkRequest request;
@@ -47,23 +47,7 @@ void addMoneyWidget::on_minecodecBtn_clicked()
 
 void addMoneyWidget::addGP()
 {
-    if(App->m_db.isValid()){
-        int inum=ui->editNum->text().toInt();
-        double dnum=ui->editNum->text().toDouble();
-        double chasePrice=ui->editPurchasePrice->text().toDouble();
-        double addMoney=dnum*chasePrice;
-        QSqlQuery query(App->m_db);
-        //占位符 : + 自定义名字
-//        query.prepare("insert into myData(code) values(:code)");
-        QString insert_sql = "insert into haveData values (?, ?, ?)";
-        query.prepare(insert_sql);
-        query.addBindValue(currentData.codec);
-        query.addBindValue(QString::number(addMoney));
-        query.addBindValue(inum);
-//        query.bindValue(":code", str);
-        query.setForwardOnly(true);
-        query.exec();
-    }
+    emit signalM::instance()->sendaddMyGP(currentData.codec,ui->editNum->text().toInt(),ui->editNum->text().toDouble());
 }
 
 void addMoneyWidget::on_noMineSearchBtn_clicked()
@@ -132,7 +116,7 @@ void addMoneyWidget::on_cancelBtn_clicked()
 
 void addMoneyWidget::on_setBtn_clicked()
 {
-    QMutexLocker locker(App->m_mutex);
+//    QMutexLocker locker(App->m_mutex);
     addGP();
     close();
 }

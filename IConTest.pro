@@ -29,13 +29,17 @@ SOURCES += \
         application.cpp \
         data.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    dataresovle.cpp \
+    signalm.cpp
 
 HEADERS += \
         addmoneywidget.h \
         application.h \
         data.h \
-        mainwindow.h
+        mainwindow.h \
+    dataresovle.h \
+    signalm.h
 
 FORMS += \
         addmoneywidget.ui \

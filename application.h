@@ -4,14 +4,18 @@
 #include <QCoreApplication>
 #include <QSqlDatabase>
 #include <QMutex>
+#include "dataresovle.h"
+#include "signalm.h"
 #define App (static_cast<application*>(QCoreApplication::instance()))
 class application:public QApplication
 {
     Q_OBJECT
 public:
     application(int& argc, char **argv);
-    QSqlDatabase m_db;
-    QMutex* m_mutex{nullptr};
+
+
+    signalM *m_signal{nullptr};
+    DataResovle *m_dataresovle{nullptr};
 };
 
 #endif // APPLICATION_H

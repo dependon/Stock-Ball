@@ -1,6 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
 #include <QString>
+#include <QMap>
 struct DataGP{
     QString codec;
     QString name;
@@ -31,6 +32,14 @@ struct DataAllDP{
     double todaySY=0;
 };
 
+struct MapdataGP
+{
+    QMap <QString ,DataGP> map;
+};
+struct MapdataHaveGP
+{
+    QMap <QString ,DataHaveGP> map;
+};
 class data
 {
 public:

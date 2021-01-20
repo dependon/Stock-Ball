@@ -24,23 +24,23 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void initDB();
-    QByteArray getReply(QString surl);
-    void sendData();
-    void addGP(const QString & str);
-    void removeGP(const QString & str);
-    void sendData2();
+//    void initDB();
+//    QByteArray getReply(QString surl);
+//    void sendData();
+//    void addGP(const QString & str);
+//    void removeGP(const QString & str);
+//    void sendData2();
+    void refreshNormalWidget();
+    void refreshMyhaveWidget();
 private slots:
     void on_pushButton_clicked();
-    void replyFinished(QNetworkReply *reply);
-    void replyFinished2(QNetworkReply *reply);
-    void updateData();
+//    void replyFinished(QNetworkReply *reply);
+//    void replyFinished2(QNetworkReply *reply);
+//    void updateData();
 
     void on_comboBox_activated(const QString &arg1);
 
     void on_miniTable_doubleClicked(const QModelIndex &index);
-
-    void on_miniTable_itemDoubleClicked(QTableWidgetItem *item);
 
     void on_normalBtn_clicked();
 
@@ -50,6 +50,9 @@ private slots:
 
     void on_addMyBtn_clicked();
 
+    void slotDataGPsChange(MapdataGP map);
+    void slotDataHaveGPsChange(MapdataHaveGP map);
+    void slotDataAllDPChange(DataAllDP data);
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *m_trayIcon{nullptr};
