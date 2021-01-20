@@ -16,7 +16,7 @@ struct DataGP{
 struct DataHaveGP{
     QString codec;
     QString name;
-    int haveNum;
+    int haveNum=0;
     double payallPrice=0;
     double currentPrice=0;
     double currentallPrice=0;

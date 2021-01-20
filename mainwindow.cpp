@@ -350,10 +350,17 @@ void MainWindow::updateData()
 
     }
     m_myAllDP=DataAllDP();
-    ui->myTable->setRowCount(m_mMyGp.count());
+    ui->myTable->setRowCount(m_mMyGp.count()+1);
     int index1=0;
-
+    DataHaveGP allgp;
     for(auto gp:m_mMyGp){
+        allgp.haveNum+=gp.haveNum;
+        allgp.todaySY+=gp.todaySY;
+        allgp.historySY+=gp.historySY;
+        allgp.payallPrice+=gp.payallPrice;
+        allgp.currentPrice+=gp.currentPrice;
+        allgp.yesterDayPrice+=gp.yesterDayPrice;
+        allgp.currentallPrice+=gp.currentallPrice;
         ui->myTable->setItem(index1,0,new QTableWidgetItem(gp.name));
 
         ui->myTable->setItem(index1,1,new QTableWidgetItem(QString::number(gp.haveNum)));
@@ -399,6 +406,48 @@ void MainWindow::updateData()
         m_myAllDP.todaySY+=gp.todaySY;
         index1++;
     }
+    ui->myTable->setItem(index1,0,new QTableWidgetItem(allgp.name));
+
+    ui->myTable->setItem(index1,1,new QTableWidgetItem(QString::number(allgp.haveNum)));
+    ui->myTable->setItem(index1,2,new QTableWidgetItem(QString::number(allgp.payallPrice)));
+    ui->myTable->setItem(index1,3,new QTableWidgetItem(QString::number(allgp.currentallPrice)));
+    ui->myTable->setItem(index1,4,new QTableWidgetItem(QString::number(allgp.currentPrice)));
+    ui->myTable->setItem(index1,5,new QTableWidgetItem(QString::number(allgp.historySY)));
+    double historySyl=100*allgp.historySY/allgp.payallPrice;
+
+
+    QString historyL=QString::number(historySyl)+"%";
+    ui->myTable->setItem(index1,6,new QTableWidgetItem(historyL));
+    if(historySyl>0){
+        ui->myTable->item(index1,5)->setTextColor(QColor("white"));
+        ui->myTable->item(index1,6)->setTextColor(QColor("white"));
+        ui->myTable->item(index1,5)->setBackground(QColor("red"));
+        ui->myTable->item(index1,6)->setBackground(QColor("red"));
+    }
+    else {
+        ui->myTable->item(index1,5)->setTextColor(QColor("white"));
+        ui->myTable->item(index1,6)->setTextColor(QColor("white"));
+        ui->myTable->item(index1,5)->setBackground(QColor("green"));
+        ui->myTable->item(index1,6)->setBackground(QColor("green"));
+    }
+    ui->myTable->setItem(index1,7,new QTableWidgetItem(QString::number(allgp.todaySY)));
+    double todayyl=100*(allgp.currentPrice-allgp.yesterDayPrice)/allgp.yesterDayPrice;
+    QString todayL=QString::number(todayyl)+"%";
+    ui->myTable->setItem(index1,8,new QTableWidgetItem(todayL));
+    if(todayyl>0){
+        ui->myTable->item(index1,7)->setTextColor(QColor("white"));
+        ui->myTable->item(index1,8)->setTextColor(QColor("white"));
+        ui->myTable->item(index1,7)->setBackground(QColor("red"));
+        ui->myTable->item(index1,8)->setBackground(QColor("red"));
+    }
+    else {
+        ui->myTable->item(index1,7)->setTextColor(QColor("white"));
+        ui->myTable->item(index1,8)->setTextColor(QColor("white"));
+        ui->myTable->item(index1,7)->setBackground(QColor("green"));
+        ui->myTable->item(index1,8)->setBackground(QColor("green"));
+    }
+    cureentInfo="今日总收益:" +QString::number(allgp.todaySY) +" \n" +" 今日收益率"+ todayL;
+    m_trayIcon->setToolTip(cureentInfo);
 }
 
 void MainWindow::on_comboBox_activated(const QString &arg1)

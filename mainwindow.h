@@ -63,6 +63,7 @@ private:
 
     DataAllDP m_myAllDP;
     QString m_currentZQ="sh";
+    QString cureentInfo;
 //    QSqlDatabase m_db;
 };
 
