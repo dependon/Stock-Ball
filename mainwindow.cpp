@@ -70,6 +70,7 @@ void MainWindow::initLeftMenu()
             }
         }
     });
+    m_normalLeftMenu->addAction(removeNoraml);
     QAction *removeMy=new QAction("删除",m_myLeftMenu);
     connect(removeMy,&QAction::triggered,this,[=]{
         if(ui->myTable->currentRow()>=0){
@@ -80,7 +81,8 @@ void MainWindow::initLeftMenu()
         }
     });
 
-    m_normalLeftMenu->addAction(removeNoraml);
+
+    m_myLeftMenu->addAction(removeMy);
 
 }
 
@@ -346,5 +348,5 @@ void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_myTable_customContextMenuRequested(const QPoint &pos)
 {
-
+    m_myLeftMenu->exec(QCursor::pos());
 }

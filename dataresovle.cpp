@@ -320,7 +320,7 @@ void DataResovle::removeMyGP(QString codec, int inum, double chasePrice)
 {
     if(m_db.isValid()){
         QSqlQuery query(m_db);
-        QString queryStr=QString("delete from myData where code=\"%1\" ").arg(codec);
+        QString queryStr=QString("delete from haveData where code=\"%1\" ").arg(codec);
         query.setForwardOnly(true);
         query.exec(queryStr);
         m_mMyGp.remove(codec);
