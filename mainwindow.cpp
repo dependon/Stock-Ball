@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(signalM::instance(),&signalM::sendDataGPsChange,this,&MainWindow::slotDataGPsChange);
     connect(signalM::instance(),&signalM::sendDataHaveGPsChange,this,&MainWindow::slotDataHaveGPsChange);
     connect(signalM::instance(),&signalM::sendDataAllDPChange,this,&MainWindow::slotDataAllDPChange);
+    initLeftMenu();
 
 
 }
@@ -46,126 +47,49 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-//void MainWindow::initDB()
-//{
-//    App->m_db=QSqlDatabase::addDatabase("QSQLITE");
-//    QFile file("test.db");
-//    if(file.exists())
-//    {
-//        qDebug()<<"文件存在";
-//    }else{
-//        qDebug()<<"文件不存在,正在新建文件.";
-//        file.open( QIODevice::ReadWrite | QIODevice::Text );
-//        file.close();
-//    }
-//    App->m_db.setDatabaseName("test.db");
+void MainWindow::initLeftMenu()
+{
+    ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->miniTable->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->myTable->setContextMenuPolicy(Qt::CustomContextMenu);
+    m_normalLeftMenu=new QMenu(this);
+        m_myLeftMenu=new QMenu(this);
 
-//    //打开数据库
-//    if (! App->m_db.isValid()) {
-//        QMessageBox::warning(this, "错误", App->m_db.lastError().text());
-//        return;
-//    }
-//    if(!App->m_db.open())
-//    {
-//        QMessageBox::warning(this, "错误", App->m_db.lastError().text());
-//        return;
-//    }
-//    QSqlQuery querycreate;
-//    querycreate.exec("CREATE TABLE IF NOT EXISTS myData(code Text primary key)");
-//    querycreate.exec("CREATE TABLE IF NOT EXISTS haveData(code Text primary key,money Text,number INTEGER)");
-//    QSqlQuery query;
-//    query.exec("select * from myData");
+    QAction *removeNoraml=new QAction("删除",m_normalLeftMenu);
+    connect(removeNoraml,&QAction::triggered,this,[=]{
+        if(ui->miniTable->currentRow()>=0){
+            QString code=ui->miniTable->item(ui->miniTable->currentRow(),0)->data(1).toString();
+            if(!code.isEmpty()){
+                signalM::instance()->sendremoveGP(code);
+            }
+        }
+        if(ui->tableWidget->currentRow()>=0){
+            QString code=ui->tableWidget->item(ui->tableWidget->currentRow(),1)->data(0).toString();
+            if(!code.isEmpty()){
+                signalM::instance()->sendremoveGP(code);
+            }
+        }
+    });
+    QAction *removeMy=new QAction("删除",m_myLeftMenu);
+    connect(removeMy,&QAction::triggered,this,[=]{
+        if(ui->myTable->currentRow()>=0){
+            QString code=ui->myTable->item(ui->myTable->currentRow(),0)->data(1).toString();
+            if(!code.isEmpty()){
+                signalM::instance()->sendremoveMyGP(code);
+            }
+        }
+    });
 
-//    while(query.next()) //一行一行遍历
-//    {
-//        //取出当前行的内容
-//        //以列为单位的     //第0列
-//        QString str= query.value(0).toString();
-//        m_mGp.insert(str,DataGP());
-//    }
+    m_normalLeftMenu->addAction(removeNoraml);
 
-//    QSqlQuery query2;
-//    query2.exec("select * from haveData");
-//    while(query2.next()) //一行一行遍历
-//    {
-//        DataHaveGP gp;
-//        //取出当前行的内容
-//        //以列为单位的     //第0列
-//        QString str= query2.value(0).toString();
-//        QString str2= query2.value(1).toString();
-//        int num= query2.value(2).toInt();
-//        gp.codec=str;
-//        gp.payallPrice=str2.toDouble();
-//        gp.haveNum=num;
-//        m_mMyGp.insert(str,gp);
-//    }
-//}
+}
+
 
 void MainWindow::on_pushButton_clicked()
 {
     signalM::instance()->sendposthttpGp(m_currentZQ+ui->searchEdit->text());
-//    QString bumStr="http://hq.sinajs.cn/list="+m_currentZQ+ui->searchEdit->text();
-//    QNetworkRequest request;
-//    request.setUrl(QUrl(bumStr));
-//    reply=manager->get(request);
 
 }
-
-//QByteArray MainWindow::getReply(QString surl)
-//{
-//    QNetworkAccessManager *NAM = new QNetworkAccessManager;
-//    QNetworkRequest request;
-//    request.setUrl(QUrl(surl));
-//    QNetworkReply *reply = NAM->get(request);
-//    QEventLoop loop;
-//    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
-//    loop.exec();
-//    reply->deleteLater();
-//    return reply->readAll();
-//}
-
-//void MainWindow::sendData()
-//{
-//    for(QString key:m_mGp.keys()){
-//        QString bumStr="http://hq.sinajs.cn/list="+key;
-//        QNetworkRequest request;
-//        request.setUrl(QUrl(bumStr));
-//        reply=manager->get(request);
-//    }
-//}
-//void MainWindow::sendData2()
-//{
-//    for(QString key:m_mMyGp.keys()){
-//        QString bumStr="http://hq.sinajs.cn/list="+key;
-//        QNetworkRequest request;
-//        request.setUrl(QUrl(bumStr));
-//        reply2=manager2->get(request);
-//    }
-//}
-//void MainWindow::addGP(const QString &str)
-//{
-//    if(App->m_db.isValid()){
-//        QSqlQuery query(App->m_db);
-//        //占位符 : + 自定义名字
-//        query.prepare("insert into myData(code) values(:code)");
-//        query.bindValue(":code", str);
-//        query.setForwardOnly(true);
-//        query.exec();
-//    }
-//}
-
-//void MainWindow::removeGP(const QString &str)
-//{
-
-//    if(App->m_db.isValid()){
-//        QSqlQuery query(App->m_db);
-//        QString queryStr=QString("delete from myData where code=\"%1\" ").arg(str);
-//        query.setForwardOnly(true);
-//        query.exec(queryStr);
-//        m_mGp.remove(str);
-//    }
-//}
-
 
 
 void MainWindow::on_comboBox_activated(const QString &arg1)
@@ -180,13 +104,13 @@ void MainWindow::on_comboBox_activated(const QString &arg1)
 
 void MainWindow::on_miniTable_doubleClicked(const QModelIndex &index)
 {
-//    QMutexLocker locker(App->m_mutex);
-//    if(ui->miniTable->currentRow()>=0){
-//        QString code=ui->miniTable->item(ui->miniTable->currentRow(),0)->data(1).toString();
-//        if(!code.isEmpty()){
-//            removeGP(code);
-//        }
-//    }
+    //    QMutexLocker locker(App->m_mutex);
+    //    if(ui->miniTable->currentRow()>=0){
+    //        QString code=ui->miniTable->item(ui->miniTable->currentRow(),0)->data(1).toString();
+    //        if(!code.isEmpty()){
+    //            removeGP(code);
+    //        }
+    //    }
 }
 
 
@@ -246,11 +170,12 @@ void MainWindow::slotDataAllDPChange(DataAllDP data)
 }
 void MainWindow::refreshNormalWidget()
 {
+    ui->tableWidget->setRowCount(m_mGp.count());
+    ui->miniTable->setRowCount(m_mGp.count());
     if(m_mGp.count()>0){
-//        sendData();
-//        sendData2();
-        ui->tableWidget->setRowCount(m_mGp.count());
-        ui->miniTable->setRowCount(m_mGp.count());
+        //        sendData();
+        //        sendData2();
+
         int index=0;
         for(auto gp:m_mGp){
             ui->tableWidget->setItem(index,0,new QTableWidgetItem(gp.name));
@@ -320,7 +245,7 @@ void MainWindow::refreshMyhaveWidget()
         allgp.yesterDayPrice+=gp.yesterDayPrice;
         allgp.currentallPrice+=gp.currentallPrice;
         ui->myTable->setItem(index1,0,new QTableWidgetItem(gp.name));
-
+        ui->myTable->item(index1,0)->setData(1,gp.codec);;
         ui->myTable->setItem(index1,1,new QTableWidgetItem(QString::number(gp.haveNum)));
         ui->myTable->setItem(index1,2,new QTableWidgetItem(QString::number(gp.payallPrice)));
         ui->myTable->setItem(index1,3,new QTableWidgetItem(QString::number(gp.currentallPrice)));
@@ -364,7 +289,7 @@ void MainWindow::refreshMyhaveWidget()
         m_myAllDP.todaySY+=gp.todaySY;
         index1++;
     }
-    ui->myTable->setItem(index1,0,new QTableWidgetItem(allgp.name));
+    ui->myTable->setItem(index1,0,new QTableWidgetItem("总收益"));
 
     ui->myTable->setItem(index1,1,new QTableWidgetItem(QString::number(allgp.haveNum)));
     ui->myTable->setItem(index1,2,new QTableWidgetItem(QString::number(allgp.payallPrice)));
@@ -407,3 +332,19 @@ void MainWindow::refreshMyhaveWidget()
     cureentInfo="今日总收益:" +QString::number(allgp.todaySY) +" \n" +" 今日收益率"+ todayL;
     m_trayIcon->setToolTip(cureentInfo);
 };
+
+void MainWindow::on_miniTable_customContextMenuRequested(const QPoint &pos)
+{
+    m_normalLeftMenu->exec(QCursor::pos());
+}
+
+void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
+{
+    m_normalLeftMenu->exec(QCursor::pos());
+}
+
+
+void MainWindow::on_myTable_customContextMenuRequested(const QPoint &pos)
+{
+
+}

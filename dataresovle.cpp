@@ -114,6 +114,11 @@ void DataResovle::removeGP(const QString &str)
         query.exec(queryStr);
         m_mGp.remove(str);
     }
+    if(0==m_mGp.count()){
+        MapdataGP mapGp;
+        mapGp.map=m_mGp;
+        emit signalM::instance()->sendDataGPsChange(mapGp);
+    }
 }
 void DataResovle::initConect()
 {
@@ -235,6 +240,7 @@ void DataResovle::replyFinished2(QNetworkReply *reply)
                 if(!gp.name.isEmpty() && !gp.codec.isEmpty()){
 
                     DataHaveGP haveGp=  m_mMyGp.value(gp.codec);
+                    haveGp.codec=gp.codec;
                     haveGp.name=gp.name;
                     haveGp.currentPrice=gp.currentPrice.toDouble();
                     haveGp.currentallPrice=gp.currentPrice.toDouble()*haveGp.haveNum;
@@ -283,6 +289,8 @@ void DataResovle::updateData()
     QMutexLocker locker(m_mutex);
     if(m_mGp.count()>0){
         sendData();
+    }
+    if(m_mMyGp.count()>0){
         sendData2();
     }
 
@@ -311,11 +319,15 @@ void DataResovle::addMyGP(QString codec,int inum,double chasePrice)
 void DataResovle::removeMyGP(QString codec, int inum, double chasePrice)
 {
     if(m_db.isValid()){
-
         QSqlQuery query(m_db);
         QString queryStr=QString("delete from myData where code=\"%1\" ").arg(codec);
         query.setForwardOnly(true);
         query.exec(queryStr);
         m_mMyGp.remove(codec);
+    }
+    if(0==m_mMyGp.count()){
+        MapdataHaveGP mapGp;
+        mapGp.map=m_mMyGp;
+        emit signalM::instance()->sendDataHaveGPsChange(mapGp);
     }
 }

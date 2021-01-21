@@ -24,19 +24,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-//    void initDB();
-//    QByteArray getReply(QString surl);
-//    void sendData();
-//    void addGP(const QString & str);
-//    void removeGP(const QString & str);
-//    void sendData2();
+    void initLeftMenu();
     void refreshNormalWidget();
     void refreshMyhaveWidget();
 private slots:
     void on_pushButton_clicked();
-//    void replyFinished(QNetworkReply *reply);
-//    void replyFinished2(QNetworkReply *reply);
-//    void updateData();
 
     void on_comboBox_activated(const QString &arg1);
 
@@ -53,6 +45,13 @@ private slots:
     void slotDataGPsChange(MapdataGP map);
     void slotDataHaveGPsChange(MapdataHaveGP map);
     void slotDataAllDPChange(DataAllDP data);
+    void on_miniTable_customContextMenuRequested(const QPoint &pos);
+
+    void on_tableWidget_customContextMenuRequested(const QPoint &pos);
+
+
+    void on_myTable_customContextMenuRequested(const QPoint &pos);
+
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *m_trayIcon{nullptr};
@@ -68,6 +67,9 @@ private:
     QString m_currentZQ="sh";
     QString cureentInfo;
 //    QSqlDatabase m_db;
+
+    QMenu *m_normalLeftMenu{nullptr};
+    QMenu *m_myLeftMenu{nullptr};
 };
 
 #endif // MAINWINDOW_H
