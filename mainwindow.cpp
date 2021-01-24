@@ -17,6 +17,7 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QFileInfo>
+#include <QLabel>
 
 #include <application.h>
 #include <addmoneywidget.h>
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 
     m_trayIcon=new QSystemTrayIcon();
     m_trayIcon->setToolTip("test");

@@ -31,7 +31,8 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     dataresovle.cpp \
-    signalm.cpp
+    signalm.cpp \
+    floatball.cpp
 
 HEADERS += \
         addmoneywidget.h \
@@ -39,7 +40,8 @@ HEADERS += \
         data.h \
         mainwindow.h \
     dataresovle.h \
-    signalm.h
+    signalm.h \
+    floatball.h
 
 FORMS += \
         addmoneywidget.ui \

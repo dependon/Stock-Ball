@@ -70,6 +70,7 @@ private:
 
     QMenu *m_normalLeftMenu{nullptr};
     QMenu *m_myLeftMenu{nullptr};
+
 };
 
 #endif // MAINWINDOW_H
