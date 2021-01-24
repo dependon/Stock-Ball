@@ -32,7 +32,8 @@ SOURCES += \
         mainwindow.cpp \
     dataresovle.cpp \
     signalm.cpp \
-    floatball.cpp
+    floatball.cpp \
+    updatemygpdialog.cpp
 
 HEADERS += \
         addmoneywidget.h \
@@ -41,11 +42,13 @@ HEADERS += \
         mainwindow.h \
     dataresovle.h \
     signalm.h \
-    floatball.h
+    floatball.h \
+    updatemygpdialog.h
 
 FORMS += \
         addmoneywidget.ui \
-        mainwindow.ui
+        mainwindow.ui \
+        updatemygpdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

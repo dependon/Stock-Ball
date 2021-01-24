@@ -22,6 +22,7 @@
 #include <application.h>
 #include <addmoneywidget.h>
 #include "signalm.h"
+#include "updatemygpdialog.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -295,7 +296,7 @@ void MainWindow::refreshMyhaveWidget()
         index1++;
     }
     ui->myTable->setItem(index1,0,new QTableWidgetItem("总收益"));
-
+    ui->myTable->item(index1,0)->setData(1,"总收益");
     ui->myTable->setItem(index1,1,new QTableWidgetItem(QString::number(allgp.haveNum)));
     ui->myTable->setItem(index1,2,new QTableWidgetItem(QString::number(allgp.payallPrice)));
     ui->myTable->setItem(index1,3,new QTableWidgetItem(QString::number(allgp.currentallPrice)));
@@ -352,4 +353,17 @@ void MainWindow::on_tableWidget_customContextMenuRequested(const QPoint &pos)
 void MainWindow::on_myTable_customContextMenuRequested(const QPoint &pos)
 {
     m_myLeftMenu->exec(QCursor::pos());
+}
+
+void MainWindow::on_myTable_cellDoubleClicked(int row, int column)
+{
+    qDebug()<<row<<column;
+    QTableWidgetItem *item=ui->myTable->item(row,0);
+    QString key=item->data(1).toString();
+    DataHaveGP haveGp=m_mMyGp.value(key);
+    if(!haveGp.codec.isEmpty()){
+        updateMyGpDialog dialog(haveGp);
+        dialog.exec();
+    }
+    qDebug()<<11;
 }

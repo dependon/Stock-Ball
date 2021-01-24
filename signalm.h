@@ -18,6 +18,9 @@ signals:
     void sendremoveMyGP(QString codec, int inum=0, double chasePrice=0);
     void sendaddGP(const QString &str);
     void sendremoveGP(const QString &str);
+    void sendExecDb(const QString &str);
+    void refreashData();
+    void refreashHaveData();
 
 private:
     explicit signalM(QObject *parent = nullptr);

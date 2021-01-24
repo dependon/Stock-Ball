@@ -32,6 +32,46 @@ void DataResovle::setSql(const QString &str)
         query.exec(str);
     }
 }
+
+void DataResovle::refreashData()
+{
+    if(m_db.isValid()){
+        m_mGp.clear();
+        QSqlQuery query(m_db);
+        query.exec("select * from myData");
+
+        while(query.next()) //一行一行遍历
+        {
+            //取出当前行的内容
+            //以列为单位的     //第0列
+            QString str= query.value(0).toString();
+            m_mGp.insert(str,DataGP());
+        }
+    }
+}
+
+void DataResovle::refreashHaveData()
+{
+    if(m_db.isValid()){
+        m_mMyGp.clear();
+        QSqlQuery query2(m_db);
+        query2.exec("select * from haveData");
+        while(query2.next()) //一行一行遍历
+        {
+            DataHaveGP gp;
+            //取出当前行的内容
+            //以列为单位的     //第0列
+            QString str= query2.value(0).toString();
+            QString str2= query2.value(1).toString();
+            int num= query2.value(2).toInt();
+            gp.codec=str;
+            gp.payallPrice=str2.toDouble();
+            gp.haveNum=num;
+            m_mMyGp.insert(str,gp);
+        }
+    }
+}
+
 void DataResovle::addGP(const QString &str)
 {
     if(m_db.isValid()){
@@ -138,8 +178,10 @@ void DataResovle::initConect()
     connect(signalM::instance(),&signalM::sendremoveMyGP,this,&DataResovle::removeMyGP);
     connect(signalM::instance(),&signalM::sendaddGP,this,&DataResovle::addGP);
     connect(signalM::instance(),&signalM::sendremoveGP,this,&DataResovle::removeGP);
-
     connect(signalM::instance(),&signalM::sendposthttpGp,this,&DataResovle::sendHttpData);
+    connect(signalM::instance(),&signalM::sendExecDb,this,&DataResovle::setSql);
+    connect(signalM::instance(),&signalM::refreashData,this,&DataResovle::refreashData);
+    connect(signalM::instance(),&signalM::refreashHaveData,this,&DataResovle::refreashHaveData);
 
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(updateData()));
@@ -171,7 +213,6 @@ void DataResovle::replyFinished(QNetworkReply* reply)
                     QStringList str2=str1.at(1).split('\"');
                     if(str2.count()==2){
                         QString name=str2.at(1);
-                        qDebug()<<name;
                         gp.name=name;
                     }
                 }
@@ -197,7 +238,6 @@ void DataResovle::replyFinished(QNetworkReply* reply)
 
     //        QJsonDocument JD = QJsonDocument::fromJson(str.toLatin1());
     //        int status = JD.object().value("").toInt();
-    qDebug()<<"xxx";
     MapdataGP mapGp;
     mapGp.map=m_mGp;
     emit signalM::instance()->sendDataGPsChange(mapGp);
@@ -226,7 +266,6 @@ void DataResovle::replyFinished2(QNetworkReply *reply)
                     QStringList str2=str1.at(1).split('\"');
                     if(str2.count()==2){
                         QString name=str2.at(1);
-                        qDebug()<<name;
                         gp.name=name;
                     }
                 }

@@ -52,6 +52,8 @@ private slots:
 
     void on_myTable_customContextMenuRequested(const QPoint &pos);
 
+    void on_myTable_cellDoubleClicked(int row, int column);
+
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *m_trayIcon{nullptr};

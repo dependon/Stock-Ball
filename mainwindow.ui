@@ -176,6 +176,9 @@
     </item>
     <item row="3" column="0">
      <widget class="QTableWidget" name="myTable">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
       <column>
        <property name="text">
         <string>名称</string>

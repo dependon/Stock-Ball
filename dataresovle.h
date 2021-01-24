@@ -15,7 +15,6 @@ class DataResovle  : public QObject
 public:
     static DataResovle * instance();
 
-    void setSql(const QString & str);
 
 private slots:
     void replyFinished(QNetworkReply *reply);
@@ -28,6 +27,10 @@ private slots:
     void removeMyGP(QString codec, int inum=0, double chasePrice=0);
     void addGP(const QString &str);
     void removeGP(const QString &str);
+    void setSql(const QString & str);
+    void refreashData();
+    void refreashHaveData();
+
 private:
     void initDB();
     void initConect();
