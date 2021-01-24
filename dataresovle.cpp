@@ -315,7 +315,7 @@ void DataResovle::addMyGP(QString codec,int inum,double chasePrice)
         query.exec();
         DataHaveGP gp;
         gp.codec=codec;
-        gp.payallPrice=chasePrice;
+        gp.payallPrice=addMoney;
         gp.haveNum=inum;
         m_mMyGp.insert(codec,gp);
     }
