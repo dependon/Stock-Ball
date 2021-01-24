@@ -313,6 +313,11 @@ void DataResovle::addMyGP(QString codec,int inum,double chasePrice)
         //        query.bindValue(":code", str);
         query.setForwardOnly(true);
         query.exec();
+        DataHaveGP gp;
+        gp.codec=codec;
+        gp.payallPrice=chasePrice;
+        gp.haveNum=inum;
+        m_mMyGp.insert(codec,gp);
     }
 }
 

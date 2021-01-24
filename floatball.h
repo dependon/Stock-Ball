@@ -6,6 +6,7 @@
 #include "data.h"
 class QMenu;
 class QLabel;
+class MainWindow;
 class floatBall: public QWidget
 {
     Q_OBJECT
@@ -27,6 +28,7 @@ public:
 
     QPoint relativePos;
     QMenu *m_leftMenu{nullptr};
+    MainWindow * m_mainWindow{nullptr};
 };
 
 #endif // FLOATBALL_H

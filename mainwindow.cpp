@@ -33,13 +33,14 @@ MainWindow::MainWindow(QWidget *parent) :
     m_trayIcon->setToolTip("test");
     m_trayIcon->show();
 
-    ui->tableWidget->hide();
+    ui->normalFrame->hide();
 
     connect(signalM::instance(),&signalM::sendDataGPsChange,this,&MainWindow::slotDataGPsChange);
     connect(signalM::instance(),&signalM::sendDataHaveGPsChange,this,&MainWindow::slotDataHaveGPsChange);
     connect(signalM::instance(),&signalM::sendDataAllDPChange,this,&MainWindow::slotDataAllDPChange);
-    initLeftMenu();
 
+    initLeftMenu();
+    setWindowTitle("配置界面");
 
 }
 
@@ -120,11 +121,11 @@ void MainWindow::on_miniTable_doubleClicked(const QModelIndex &index)
 
 void MainWindow::on_normalBtn_clicked()
 {
-    if(ui->miniTable->isVisible()){
-        ui->miniTable->setVisible(false);
+    if(ui->normalFrame->isVisible()){
+        ui->normalFrame->setVisible(false);
     }
     else {
-        ui->miniTable->setVisible(true);
+        ui->normalFrame->setVisible(true);
     }
 }
 

@@ -19,6 +19,7 @@ addMoneyWidget::addMoneyWidget(QWidget *parent) :
     manager = new QNetworkAccessManager(this);
     //   reply = manager->get(request);
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
+    setWindowTitle("添加自选");
 }
 
 addMoneyWidget::~addMoneyWidget()
@@ -47,7 +48,7 @@ void addMoneyWidget::on_minecodecBtn_clicked()
 
 void addMoneyWidget::addGP()
 {
-    emit signalM::instance()->sendaddMyGP(currentData.codec,ui->editNum->text().toInt(),ui->editNum->text().toDouble());
+    emit signalM::instance()->sendaddMyGP(currentData.codec,ui->editNum->text().toInt(),ui->editPurchasePrice->text().toDouble());
 }
 
 void addMoneyWidget::on_noMineSearchBtn_clicked()

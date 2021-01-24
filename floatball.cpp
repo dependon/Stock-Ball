@@ -3,6 +3,8 @@
 #include <QMenu>
 #include <QCoreApplication>
 #include "signalm.h"
+#include "mainwindow.h"
+
 floatBall::floatBall(QWidget *parent):
     QWidget(parent)
 {
@@ -12,17 +14,20 @@ floatBall::floatBall(QWidget *parent):
     setAutoFillBackground(true);
     setFixedSize(QSize(83,50));
     QString  SS = QString("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0,"
-                     "stop:0 rgba(255,0,0,200), stop:%1 rgba(255,0,0,200),"
-                     "stop:%2 rgba(0,0,0,200), stop:1 rgba(0,0,0,200));")
-                .arg(10*1.0/100-0.001)
-                .arg(10*1.0/100);
+                          "stop:0 rgba(255,0,0,200), stop:%1 rgba(255,0,0,200),"
+                          "stop:%2 rgba(0,0,0,200), stop:1 rgba(0,0,0,200));")
+            .arg(0*1.0/100-0.001)
+            .arg(0*1.0/100);
 
     //qDebug() << SS;
     m_label =new QLabel(this);
     m_label->setStyleSheet(SS);
-    m_label->setText("↑ 0.00 K/s\n↓ 0.00 K/s");
-initConnect();
-initLeftMenu();
+    m_label->setText("日收 0.00 元\n日率 0.00 %");
+
+    m_mainWindow =new MainWindow();
+    initConnect();
+    initLeftMenu();
+
 
 }
 
@@ -37,7 +42,7 @@ void floatBall::mouseMoveEvent(QMouseEvent *event)
 {
     setCursor(Qt::ClosedHandCursor);
     move(event->globalPos() + relativePos);
-//    label_float->move(x() - label_float->width()/2, y() - label_float->height() - 5);
+    //    label_float->move(x() - label_float->width()/2, y() - label_float->height() - 5);
 }
 
 void floatBall::mouseReleaseEvent(QMouseEvent *event)
@@ -56,8 +61,18 @@ void floatBall::initConnect()
 void floatBall::initLeftMenu()
 {
     m_leftMenu=new QMenu();
+
+
+    QAction * settingAction=new QAction("设置",m_leftMenu);
+    connect(settingAction, &QAction::triggered, this,[=]{
+        m_mainWindow->show();
+    });
+
+    m_leftMenu->addAction(settingAction);
     QAction * exitaction=new QAction("退出",m_leftMenu);
     connect(exitaction, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+
     m_leftMenu->addAction(exitaction);
 }
 
@@ -70,7 +85,7 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
 {
     QMap <QString ,DataHaveGP> mapdata=map.map;
 
-   DataAllDP m_myAllDP=DataAllDP();
+    DataAllDP m_myAllDP=DataAllDP();
     int index1=0;
     DataHaveGP allgp;
     for(auto gp:mapdata){
@@ -94,16 +109,16 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
     QString historyL=QString::number(historySyl)+"%";
 
     if(historySyl>0){
-//        ui->myTable->item(index1,5)->setTextColor(QColor("white"));
-//        ui->myTable->item(index1,6)->setTextColor(QColor("white"));
-//        ui->myTable->item(index1,5)->setBackground(QColor("red"));
-//        ui->myTable->item(index1,6)->setBackground(QColor("red"));
+        //        ui->myTable->item(index1,5)->setTextColor(QColor("white"));
+        //        ui->myTable->item(index1,6)->setTextColor(QColor("white"));
+        //        ui->myTable->item(index1,5)->setBackground(QColor("red"));
+        //        ui->myTable->item(index1,6)->setBackground(QColor("red"));
     }
     else {
-//        ui->myTable->item(index1,5)->setTextColor(QColor("white"));
-//        ui->myTable->item(index1,6)->setTextColor(QColor("white"));
-//        ui->myTable->item(index1,5)->setBackground(QColor("green"));
-//        ui->myTable->item(index1,6)->setBackground(QColor("green"));
+        //        ui->myTable->item(index1,5)->setTextColor(QColor("white"));
+        //        ui->myTable->item(index1,6)->setTextColor(QColor("white"));
+        //        ui->myTable->item(index1,5)->setBackground(QColor("green"));
+        //        ui->myTable->item(index1,6)->setBackground(QColor("green"));
     }
     double todayyl=100*(allgp.currentPrice-allgp.yesterDayPrice)/allgp.yesterDayPrice;
     QString todayL=QString::number(todayyl)+"%";
@@ -122,7 +137,7 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
                 .arg(todayyl*10.0/100);
     }
     m_label->setStyleSheet(SS);
-    QString cureentInfo="" +QString::number(allgp.todaySY) +"\n" +""+ todayL;
+    QString cureentInfo="日收:" +QString::number(allgp.todaySY)+"元" +"\n" +"日率:"+ todayL;
     m_label->setText(cureentInfo);
 }
 
@@ -139,6 +154,8 @@ void floatBall::contextMenuEvent(QContextMenuEvent *event)
 
 void floatBall::mouseDoubleClickEvent(QMouseEvent *event)
 {
-
+    if(m_mainWindow){
+        m_mainWindow->show();
+    }
 }
 
