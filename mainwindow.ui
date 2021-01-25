@@ -14,216 +14,224 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QPushButton" name="normalBtn">
         <property name="text">
-         <string>默认</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="detailedBtn">
-        <property name="text">
-         <string>详细</string>
+         <string>自选</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="myBtn">
         <property name="text">
-         <string>我的</string>
+         <string>持有</string>
         </property>
        </widget>
       </item>
      </layout>
     </item>
     <item row="1" column="0">
-     <widget class="QFrame" name="normalFrame">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QComboBox" name="comboBox">
+      <widget class="QWidget" name="page">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QFrame" name="normalFrame">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <property name="text">
-             <string>上证</string>
-            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QComboBox" name="comboBox">
+               <item>
+                <property name="text">
+                 <string>上证</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>深圳成指</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="searchEdit"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton">
+               <property name="text">
+                <string>添加</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
-            <property name="text">
-             <string>深圳成指</string>
-            </property>
+            <widget class="QTableWidget" name="miniTable">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>150</number>
+             </attribute>
+             <attribute name="horizontalHeaderMinimumSectionSize">
+              <number>50</number>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>名称</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>最新</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>涨跌</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>涨幅</string>
+              </property>
+             </column>
+            </widget>
            </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="searchEdit"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton">
+           <item>
+            <widget class="QTableWidget" name="tableWidget">
+             <row>
+              <property name="text">
+               <string/>
+              </property>
+             </row>
+             <column>
+              <property name="text">
+               <string>名称</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>代码</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>今日开</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>昨日收</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>当前价格</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>今日最高</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>今日最低</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>日期</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>时间</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="addMyBtn">
+          <property name="text">
+           <string>添加我的持股</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QTableWidget" name="myTable">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <column>
            <property name="text">
-            <string>添加</string>
+            <string>名称</string>
            </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="miniTable">
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
-         </property>
-         <attribute name="horizontalHeaderMinimumSectionSize">
-          <number>50</number>
-         </attribute>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>150</number>
-         </attribute>
-         <column>
-          <property name="text">
-           <string>名称</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>最新</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>涨跌</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>涨幅</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item>
-        <widget class="QTableWidget" name="tableWidget">
-         <row>
-          <property name="text">
-           <string/>
-          </property>
-         </row>
-         <column>
-          <property name="text">
-           <string>名称</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>代码</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>今日开</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>昨日收</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>当前价格</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>今日最高</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>今日最低</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>日期</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>时间</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="addMyBtn">
-      <property name="text">
-       <string>添加我的持股</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QTableWidget" name="myTable">
-      <property name="editTriggers">
-       <set>QAbstractItemView::NoEditTriggers</set>
-      </property>
-      <column>
-       <property name="text">
-        <string>名称</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>持有股数</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>成本总价</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>当前总价</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>当前单价</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>历史营收</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>历史收益率</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>今日营收</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>今日收益率</string>
-       </property>
-      </column>
+          </column>
+          <column>
+           <property name="text">
+            <string>持有股数</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>成本总价</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>当前总价</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>当前单价</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>历史营收</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>历史收益率</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>今日营收</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>今日收益率</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -234,7 +242,7 @@
      <x>0</x>
      <y>0</y>
      <width>940</width>
-     <height>23</height>
+     <height>36</height>
     </rect>
    </property>
   </widget>

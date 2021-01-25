@@ -7,12 +7,13 @@
 class QMenu;
 class QLabel;
 class MainWindow;
+class QSystemTrayIcon;
 class floatBall: public QWidget
 {
     Q_OBJECT
 public:
     floatBall(QWidget *parent = nullptr );
-    QLabel *m_label{nullptr};
+
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -26,9 +27,15 @@ public:
     void contextMenuEvent(QContextMenuEvent *event);
     void mouseDoubleClickEvent(QMouseEvent* event);
 
+    QLabel *m_label{nullptr};
     QPoint relativePos;
     QMenu *m_leftMenu{nullptr};
+    QMenu *m_trayMenu{nullptr};
     MainWindow * m_mainWindow{nullptr};
+    QSystemTrayIcon *m_trayIcon{nullptr};
+
+    QAction *m_showAction{nullptr};
+    QAction *m_hideAction{nullptr};
 };
 
 #endif // FLOATBALL_H

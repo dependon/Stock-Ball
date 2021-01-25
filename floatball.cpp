@@ -2,6 +2,7 @@
 #include <QLabel>
 #include <QMenu>
 #include <QCoreApplication>
+#include <QSystemTrayIcon>
 #include "signalm.h"
 #include "mainwindow.h"
 
@@ -12,7 +13,7 @@ floatBall::floatBall(QWidget *parent):
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
     setAttribute(Qt::WA_TranslucentBackground, true);
     setAutoFillBackground(true);
-    setFixedSize(QSize(83,50));
+    setFixedSize(QSize(100,50));
     QString  SS = QString("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0,"
                           "stop:0 rgba(255,0,0,200), stop:%1 rgba(255,0,0,200),"
                           "stop:%2 rgba(0,0,0,200), stop:1 rgba(0,0,0,200));")
@@ -23,6 +24,10 @@ floatBall::floatBall(QWidget *parent):
     m_label =new QLabel(this);
     m_label->setStyleSheet(SS);
     m_label->setText("日收 0.00 元\n日率 0.00 %");
+
+    m_trayIcon=new QSystemTrayIcon(this);
+    m_trayIcon->setToolTip("test");
+    m_trayIcon->show();
 
     m_mainWindow =new MainWindow();
     initConnect();
@@ -67,13 +72,58 @@ void floatBall::initLeftMenu()
     connect(settingAction, &QAction::triggered, this,[=]{
         m_mainWindow->show();
     });
-
     m_leftMenu->addAction(settingAction);
+
+    m_hideAction=new QAction("隐藏",m_leftMenu);
+    connect(m_hideAction, &QAction::triggered, this,[=]{
+        if(m_label->isVisible()){
+            m_label->hide();
+            m_showAction->setText("显示");
+            m_hideAction->setText("显示");
+        }
+        else {
+            m_label->show();
+            m_showAction->setText("隐藏");
+            m_hideAction->setText("隐藏");
+        }
+    });
+    m_leftMenu->addAction(m_hideAction);
+
     QAction * exitaction=new QAction("退出",m_leftMenu);
     connect(exitaction, SIGNAL(triggered()), qApp, SLOT(quit()));
-
-
     m_leftMenu->addAction(exitaction);
+
+
+    m_trayMenu=new QMenu();
+    QAction * settingAction2=new QAction("设置",m_leftMenu);
+    connect(settingAction2, &QAction::triggered, this,[=]{
+        m_mainWindow->show();
+    });
+    m_trayMenu->addAction(settingAction2);
+
+
+
+    m_showAction=new QAction("隐藏",m_leftMenu);
+    connect(m_showAction, &QAction::triggered, this,[=]{
+        if(m_label->isVisible()){
+            m_label->hide();
+            m_showAction->setText("显示");
+            m_hideAction->setText("显示");
+        }
+        else {
+            m_label->show();
+            m_showAction->setText("隐藏");
+            m_hideAction->setText("隐藏");
+        }
+    });
+    m_trayMenu->addAction(m_showAction);
+
+    QAction * exitaction2=new QAction("退出",m_leftMenu);
+    connect(exitaction2, SIGNAL(triggered()), qApp, SLOT(quit()));
+    m_trayMenu->addAction(exitaction2);
+
+    m_trayIcon->setContextMenu(m_trayMenu);
+
 }
 
 void floatBall::slotDataGPsChange(MapdataGP map)
@@ -123,13 +173,21 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
     double todayyl=100*(allgp.currentPrice-allgp.yesterDayPrice)/allgp.yesterDayPrice;
     QString todayL=QString::number(todayyl)+"%";
     QString SS;
-    if(todayyl<0){
+    if(todayyl<-10 ||todayyl>10){
+            SS = QString("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0,"
+                         "stop:0 rgba(0,200,0,200), stop:%1 rgba(0,200,0,200),"
+                         "stop:%2 rgba(0,0,0,200), stop:1 rgba(0,0,0,200));")
+                    .arg(0*1.0/100-0.001)
+                    .arg(0*1.0/100);
+    }
+    else if(todayyl<0){
         SS = QString("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0,"
                      "stop:0 rgba(0,200,0,200), stop:%1 rgba(0,200,0,200),"
                      "stop:%2 rgba(0,0,0,200), stop:1 rgba(0,0,0,200));")
                 .arg(-todayyl*10.0/100-0.001)
                 .arg(-todayyl*10.0/100);
-    } else {
+    }
+    else{
         SS = QString("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0,"
                      "stop:0 rgba(255,0,0,200), stop:%1 rgba(255,0,0,200),"
                      "stop:%2 rgba(0,0,0,200), stop:1 rgba(0,0,0,200));")
@@ -139,6 +197,7 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
     m_label->setStyleSheet(SS);
     QString cureentInfo="日收:" +QString::number(allgp.todaySY)+"元" +"\n" +"日率:"+ todayL;
     m_label->setText(cureentInfo);
+    m_trayIcon->setToolTip(cureentInfo);
 }
 
 void floatBall::slotDataAllDPChange(DataAllDP data)

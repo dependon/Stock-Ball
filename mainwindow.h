@@ -56,7 +56,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QSystemTrayIcon *m_trayIcon{nullptr};
+//    QSystemTrayIcon *m_trayIcon{nullptr};
     QNetworkAccessManager *manager {nullptr};
     QNetworkAccessManager *manager2 {nullptr};
     QNetworkReply *reply {nullptr};
