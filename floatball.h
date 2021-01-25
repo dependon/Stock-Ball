@@ -14,26 +14,25 @@ class floatBall: public QWidget
 public:
     floatBall(QWidget *parent = nullptr );
 
-
+protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-    void initConnect();
-    void initLeftMenu();
-
-    void slotDataGPsChange(MapdataGP map);
-    void slotDataHaveGPsChange(MapdataHaveGP map);
-    void slotDataAllDPChange(DataAllDP data);
     void contextMenuEvent(QContextMenuEvent *event);
     void mouseDoubleClickEvent(QMouseEvent* event);
 
+public slots:
+    void slotDataGPsChange(MapdataGP map);
+    void slotDataHaveGPsChange(MapdataHaveGP map);
+    void slotDataAllDPChange(DataAllDP data);
+
+private:
     QLabel *m_label{nullptr};
     QPoint relativePos;
     QMenu *m_leftMenu{nullptr};
     QMenu *m_trayMenu{nullptr};
     MainWindow * m_mainWindow{nullptr};
     QSystemTrayIcon *m_trayIcon{nullptr};
-
     QAction *m_showAction{nullptr};
     QAction *m_hideAction{nullptr};
 };
