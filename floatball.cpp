@@ -174,11 +174,11 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
     QString todayL=QString::number(todayyl)+"%";
     QString SS;
     if(todayyl<-10 ||todayyl>10){
-            SS = QString("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0,"
-                         "stop:0 rgba(0,200,0,200), stop:%1 rgba(0,200,0,200),"
-                         "stop:%2 rgba(0,0,0,200), stop:1 rgba(0,0,0,200));")
-                    .arg(0*1.0/100-0.001)
-                    .arg(0*1.0/100);
+        SS = QString("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0,"
+                     "stop:0 rgba(0,200,0,200), stop:%1 rgba(0,200,0,200),"
+                     "stop:%2 rgba(0,0,0,200), stop:1 rgba(0,0,0,200));")
+                .arg(0*1.0/100-0.001)
+                .arg(0*1.0/100);
     }
     else if(todayyl<0){
         SS = QString("background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0,"

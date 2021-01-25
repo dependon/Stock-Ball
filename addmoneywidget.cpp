@@ -37,7 +37,7 @@ void addMoneyWidget::setCodecData(QMap<QString, DataGP> gpMap)
 
 void addMoneyWidget::on_minecodecBtn_clicked()
 {
-//    App->m_db;
+    //    App->m_db;
     if(!ui->comboxCodec->currentText().isEmpty()){
         QString bumStr="http://hq.sinajs.cn/list="+ui->comboxCodec->currentText();
         QNetworkRequest request;
@@ -116,7 +116,7 @@ void addMoneyWidget::on_cancelBtn_clicked()
 
 void addMoneyWidget::on_setBtn_clicked()
 {
-//    QMutexLocker locker(App->m_mutex);
+    //    QMutexLocker locker(App->m_mutex);
     addGP();
     close();
 }

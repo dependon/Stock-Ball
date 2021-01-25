@@ -30,11 +30,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
-//    m_trayIcon=new QSystemTrayIcon();
-//    m_trayIcon->setToolTip("test");
-//    m_trayIcon->show();
+    //    m_trayIcon=new QSystemTrayIcon();
+    //    m_trayIcon->setToolTip("test");
+    //    m_trayIcon->show();
 
-//    ui->normalFrame->hide();
+    //    ui->normalFrame->hide();
     ui->miniTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->myTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -59,7 +59,7 @@ void MainWindow::initLeftMenu()
     ui->miniTable->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->myTable->setContextMenuPolicy(Qt::CustomContextMenu);
     m_normalLeftMenu=new QMenu(this);
-        m_myLeftMenu=new QMenu(this);
+    m_myLeftMenu=new QMenu(this);
 
     QAction *removeNoraml=new QAction("删除",m_normalLeftMenu);
     connect(removeNoraml,&QAction::triggered,this,[=]{
@@ -124,12 +124,12 @@ void MainWindow::on_miniTable_doubleClicked(const QModelIndex &index)
 
 void MainWindow::on_normalBtn_clicked()
 {
-//    if(ui->normalFrame->isVisible()){
-//        ui->normalFrame->setVisible(false);
-//    }
-//    else {
-//        ui->normalFrame->setVisible(true);
-//    }
+    //    if(ui->normalFrame->isVisible()){
+    //        ui->normalFrame->setVisible(false);
+    //    }
+    //    else {
+    //        ui->normalFrame->setVisible(true);
+    //    }
     ui->stackedWidget->setCurrentIndex(0);
 }
 
@@ -145,12 +145,12 @@ void MainWindow::on_detailedBtn_clicked()
 
 void MainWindow::on_myBtn_clicked()
 {
-//    if(ui->myTable->isVisible()){
-//        ui->myTable->setVisible(false);
-//    }
-//    else {
-//        ui->myTable->setVisible(true);
-//    }
+    //    if(ui->myTable->isVisible()){
+    //        ui->myTable->setVisible(false);
+    //    }
+    //    else {
+    //        ui->myTable->setVisible(true);
+    //    }
     ui->stackedWidget->setCurrentIndex(1);
 }
 
@@ -340,7 +340,7 @@ void MainWindow::refreshMyhaveWidget()
         ui->myTable->item(index1,8)->setBackground(QColor("green"));
     }
     cureentInfo="今日总收益:" +QString::number(allgp.todaySY) +" \n" +" 今日收益率"+ todayL;
-//    m_trayIcon->setToolTip(cureentInfo);
+    //    m_trayIcon->setToolTip(cureentInfo);
 };
 
 void MainWindow::on_miniTable_customContextMenuRequested(const QPoint &pos)

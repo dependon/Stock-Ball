@@ -15,11 +15,11 @@ int main(int argc, char *argv[])
     qRegisterMetaType<DataGP>("DataGP");
     qRegisterMetaType<DataAllDP>("DataAllDP");
     application a(argc, argv);
-//    MainWindow w;
-//    w.show();
+    //    MainWindow w;
+    //    w.show();
 
     floatBall ball;
-ball.show();
+    ball.show();
 
     return a.exec();
 }

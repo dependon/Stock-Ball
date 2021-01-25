@@ -24,27 +24,27 @@ updateMyGpDialog::~updateMyGpDialog()
 
 void updateMyGpDialog::on_okBtn_clicked()
 {
-//    if(m_db.isValid()){
+    //    if(m_db.isValid()){
 
-//        double dnum=inum;
-//        double addMoney =dnum*chasePrice;
-//        QSqlQuery query(m_db);
-//        //占位符 : + 自定义名字
-//        //        query.prepare("insert into myData(code) values(:code)");
-//        QString insert_sql = "insert into haveData values (?, ?, ?)";
-//        query.prepare(insert_sql);
-//        query.addBindValue(codec);
-//        query.addBindValue(QString::number(addMoney));
-//        query.addBindValue(inum);
-//        //        query.bindValue(":code", str);
-//        query.setForwardOnly(true);
-//        query.exec();
-//        DataHaveGP gp;
-//        gp.codec=codec;
-//        gp.payallPrice=addMoney;
-//        gp.haveNum=inum;
-//        m_mMyGp.insert(codec,gp);
-//    }
+    //        double dnum=inum;
+    //        double addMoney =dnum*chasePrice;
+    //        QSqlQuery query(m_db);
+    //        //占位符 : + 自定义名字
+    //        //        query.prepare("insert into myData(code) values(:code)");
+    //        QString insert_sql = "insert into haveData values (?, ?, ?)";
+    //        query.prepare(insert_sql);
+    //        query.addBindValue(codec);
+    //        query.addBindValue(QString::number(addMoney));
+    //        query.addBindValue(inum);
+    //        //        query.bindValue(":code", str);
+    //        query.setForwardOnly(true);
+    //        query.exec();
+    //        DataHaveGP gp;
+    //        gp.codec=codec;
+    //        gp.payallPrice=addMoney;
+    //        gp.haveNum=inum;
+    //        m_mMyGp.insert(codec,gp);
+    //    }
     double money=ui->totalEdit->text().toDouble();
     int number=ui->numEdit->text().toInt();
     QString str=QString("UPDATE  haveData SET money = %1 , number= %2  WHERE code ='%3'").arg(money).arg(number).arg(m_map.codec);
