@@ -13,7 +13,8 @@ class floatBall: public QWidget
     Q_OBJECT
 public:
     floatBall(QWidget *parent = nullptr );
-
+    void initConnect();
+    void initLeftMenu();
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

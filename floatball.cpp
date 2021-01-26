@@ -170,7 +170,7 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
         //        ui->myTable->item(index1,5)->setBackground(QColor("green"));
         //        ui->myTable->item(index1,6)->setBackground(QColor("green"));
     }
-    double todayyl=100*(allgp.currentPrice-allgp.yesterDayPrice)/allgp.yesterDayPrice;
+    double todayyl=100*(allgp.todaySY)/allgp.currentallPrice;
     QString todayL=QString::number(todayyl)+"%";
     QString SS;
     if(todayyl<-10 ||todayyl>10){
