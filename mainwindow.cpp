@@ -203,7 +203,7 @@ void MainWindow::refreshNormalWidget()
             double zd=gp.currentPrice.toDouble()-gp.YesterdayClosingPrice.toDouble();
             QString zdStr=QString::number(zd);
             double zf=zd*100.0/gp.YesterdayClosingPrice.toDouble();
-            QString zfStr=QString::number(zf)+"%";
+            QString zfStr=QString::number(zf,'g',3)+"%";
             QTableWidgetItem *nameitem = new QTableWidgetItem(name1);
             nameitem->setData(1,gp.codec);
             QTableWidgetItem *currentItem = new QTableWidgetItem(cuurent);
@@ -264,7 +264,7 @@ void MainWindow::refreshMyhaveWidget()
         double historySyl=100*gp.historySY/gp.payallPrice;
 
 
-        QString historyL=QString::number(historySyl)+"%";
+        QString historyL=QString::number(historySyl,'g',3)+"%";
         ui->myTable->setItem(index1,6,new QTableWidgetItem(historyL));
         if(historySyl>0){
             ui->myTable->item(index1,5)->setTextColor(QColor("white"));
@@ -280,7 +280,7 @@ void MainWindow::refreshMyhaveWidget()
         }
         ui->myTable->setItem(index1,7,new QTableWidgetItem(QString::number(gp.todaySY)));
         double todayyl=100*(gp.currentPrice-gp.yesterDayPrice)/gp.yesterDayPrice;
-        QString todayL=QString::number(todayyl)+"%";
+        QString todayL=QString::number(todayyl,'g',3)+"%";
         ui->myTable->setItem(index1,8,new QTableWidgetItem(todayL));
         if(todayyl>0){
             ui->myTable->item(index1,7)->setTextColor(QColor("white"));
@@ -309,7 +309,7 @@ void MainWindow::refreshMyhaveWidget()
     double historySyl=100*allgp.historySY/allgp.payallPrice;
 
 
-    QString historyL=QString::number(historySyl)+"%";
+    QString historyL=QString::number(historySyl,'g',3)+"%";
     ui->myTable->setItem(index1,6,new QTableWidgetItem(historyL));
     if(historySyl>0){
         ui->myTable->item(index1,5)->setTextColor(QColor("white"));
@@ -325,7 +325,7 @@ void MainWindow::refreshMyhaveWidget()
     }
     ui->myTable->setItem(index1,7,new QTableWidgetItem(QString::number(allgp.todaySY)));
     double todayyl=100*(allgp.currentPrice-allgp.yesterDayPrice)/allgp.yesterDayPrice;
-    QString todayL=QString::number(todayyl)+"%";
+    QString todayL=QString::number(todayyl,'g',3)+"%";
     ui->myTable->setItem(index1,8,new QTableWidgetItem(todayL));
     if(todayyl>0){
         ui->myTable->item(index1,7)->setTextColor(QColor("white"));

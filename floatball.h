@@ -22,6 +22,8 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event);
     void mouseDoubleClickEvent(QMouseEvent* event);
 
+    void enterEvent(QEvent *event);
+    void leaveEvent(QEvent *event);
 public slots:
     void slotDataGPsChange(MapdataGP map);
     void slotDataHaveGPsChange(MapdataHaveGP map);
@@ -29,6 +31,7 @@ public slots:
 
 private:
     QLabel *m_label{nullptr};
+    QLabel *m_floatShowLabel{nullptr};
     QPoint relativePos;
     QMenu *m_leftMenu{nullptr};
     QMenu *m_trayMenu{nullptr};
