@@ -8,7 +8,7 @@ QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = IConTest
+TARGET = StockBall
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use

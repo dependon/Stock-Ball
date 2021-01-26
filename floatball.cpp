@@ -95,6 +95,8 @@ void floatBall::initLeftMenu()
     QAction * settingAction=new QAction("设置",m_leftMenu);
     connect(settingAction, &QAction::triggered, this,[=]{
         m_mainWindow->show();
+        m_mainWindow->activateWindow();
+
     });
     m_leftMenu->addAction(settingAction);
 
@@ -122,6 +124,7 @@ void floatBall::initLeftMenu()
     QAction * settingAction2=new QAction("设置",m_leftMenu);
     connect(settingAction2, &QAction::triggered, this,[=]{
         m_mainWindow->show();
+        m_mainWindow->activateWindow();
     });
     m_trayMenu->addAction(settingAction2);
 
@@ -249,7 +252,7 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
 
     pen.setWidth(10);
     painter.setPen(pen);
-//    painter.drawArc(pixmap.rect().adjusted(10,10,-10,-10), 0, 360*16*todayyl/100);
+    //    painter.drawArc(pixmap.rect().adjusted(10,10,-10,-10), 0, 360*16*todayyl/100);
     QFont font;
     font.setPointSize(100);
     painter.setFont(font);
@@ -278,6 +281,7 @@ void floatBall::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if(m_mainWindow){
         m_mainWindow->show();
+        m_mainWindow->activateWindow();
     }
 }
 
