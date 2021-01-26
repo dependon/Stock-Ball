@@ -30,7 +30,7 @@ floatBall::floatBall(QWidget *parent):
     m_label->setFont(font);
 
     m_floatShowLabel=new QLabel();
-    m_floatShowLabel->setFixedWidth(155);
+    m_floatShowLabel->setFixedWidth(200);
     m_floatShowLabel->setWindowFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
     font.setPointSize(10);
     m_floatShowLabel->setFont(font);
@@ -229,6 +229,8 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
     QString cureentInfo="日收:" +QString::number(allgp.todaySY)+"元" +"\n" +"日率:"+ todayL;
     m_label->setText(cureentInfo);
     m_trayIcon->setToolTip(cureentInfo);
+
+    floatShowStr+="日收益:" +QString::number(allgp.todaySY)+"元" +" " +"日利率:"+ todayL;
     m_floatShowLabel->setText(floatShowStr);
 
     //修改托盘图标
