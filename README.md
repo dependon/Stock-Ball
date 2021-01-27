@@ -9,20 +9,39 @@
 linux会出现在右上角，windows会出现在屏幕中间
 
 ![image](./img/1.png)
+
 ![image](./img/4.png)
 
+
+
 右下角有托盘，可以影藏小球
+
+
+
 ![image](./img/3.png)
+
+
+
 自选可以查看每日的涨跌
+
 ![image](./img/2.png)
 
+
+
 持有界面就可以配置小球的每日涨跌幅度
+
 ![image](./img/7.png)
 
+
+
 通过添加我的持股添加
+
 ![image](./img/5.png)
 
+
+
 双击行可以更改数据，右键可以删除数据
+
 ![image](./img/6.png)
 
 ## 联系我（欢迎提供意见和帮助）
