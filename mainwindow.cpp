@@ -324,7 +324,7 @@ void MainWindow::refreshMyhaveWidget()
         ui->myTable->item(index1,6)->setBackground(QColor("green"));
     }
     ui->myTable->setItem(index1,7,new QTableWidgetItem(QString::number(allgp.todaySY)));
-    double todayyl=100*(allgp.currentPrice-allgp.yesterDayPrice)/allgp.yesterDayPrice;
+    double todayyl=100*(allgp.todaySY)/allgp.currentallPrice;
     QString todayL=QString::number(todayyl,'g',3)+"%";
     ui->myTable->setItem(index1,8,new QTableWidgetItem(todayL));
     if(todayyl>0){
