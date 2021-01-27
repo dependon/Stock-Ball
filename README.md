@@ -47,3 +47,7 @@ linux会出现在右上角，windows会出现在屏幕中间
 ## 联系我（欢迎提供意见和帮助）
 
 liuminghang0821@qq.com
+
+## 参考
+小球的设计参考
+https://github.com/sonichy/HTYFloatBall
