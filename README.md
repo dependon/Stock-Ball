@@ -44,6 +44,9 @@ linux会出现在右上角，windows会出现在屏幕中间
 
 ![image](./img/6.png)
 
+曲线图
+![image](./img/8.png)
+![image](./img/9.png)
 ## 联系我（欢迎提供意见和帮助）
 
 liuminghang0821@qq.com

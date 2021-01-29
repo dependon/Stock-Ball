@@ -42,6 +42,7 @@ floatBall::floatBall(QWidget *parent):
     m_trayIcon->show();
 
     m_mainWindow =new MainWindow();
+    m_mainWindow->showNormal();
     initConnect();
     initLeftMenu();
 
