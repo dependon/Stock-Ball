@@ -12,6 +12,7 @@ class QNetworkAccessManager;
 class QTimer;
 class QMutex;
 class QTableWidgetItem;
+class StockCanvas;
 namespace Ui {
 class MainWindow;
 }
@@ -54,6 +55,10 @@ private slots:
 
     void on_myTable_cellDoubleClicked(int row, int column);
 
+    void on_miniTable_cellDoubleClicked(int row, int column);
+
+    void on_tableWidget_cellDoubleClicked(int row, int column);
+
 private:
     Ui::MainWindow *ui;
 //    QSystemTrayIcon *m_trayIcon{nullptr};
@@ -72,6 +77,8 @@ private:
 
     QMenu *m_normalLeftMenu{nullptr};
     QMenu *m_myLeftMenu{nullptr};
+
+    StockCanvas *m_stockWidget{nullptr};
 
 };
 

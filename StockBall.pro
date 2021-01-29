@@ -33,7 +33,9 @@ SOURCES += \
     dataresovle.cpp \
     signalm.cpp \
     floatball.cpp \
-    updatemygpdialog.cpp
+    updatemygpdialog.cpp \
+    stockView/stockcanvas.cpp \
+    stockView/stockviewdata.cpp
 
 HEADERS += \
         addmoneywidget.h \
@@ -43,7 +45,9 @@ HEADERS += \
     dataresovle.h \
     signalm.h \
     floatball.h \
-    updatemygpdialog.h
+    updatemygpdialog.h \
+    stockView/stockcanvas.h \
+    stockView/stockviewdata.h
 
 FORMS += \
         addmoneywidget.ui \

@@ -23,6 +23,7 @@
 #include <addmoneywidget.h>
 #include "signalm.h"
 #include "updatemygpdialog.h"
+#include "stockView/stockcanvas.h"
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -77,6 +78,20 @@ void MainWindow::initLeftMenu()
         }
     });
     m_normalLeftMenu->addAction(removeNoraml);
+
+    QAction *editMy=new QAction("配置",m_myLeftMenu);
+    connect(editMy,&QAction::triggered,this,[=]{
+        if(ui->myTable->currentRow()>=0){
+            QTableWidgetItem *item=ui->myTable->item(ui->myTable->currentRow(),0);
+            QString key=item->data(1).toString();
+            DataHaveGP haveGp=m_mMyGp.value(key);
+            if(!haveGp.codec.isEmpty()){
+                updateMyGpDialog dialog(haveGp);
+                dialog.exec();
+            }
+        }
+    });
+
     QAction *removeMy=new QAction("删除",m_myLeftMenu);
     connect(removeMy,&QAction::triggered,this,[=]{
         if(ui->myTable->currentRow()>=0){
@@ -370,4 +385,51 @@ void MainWindow::on_myTable_cellDoubleClicked(int row, int column)
         dialog.exec();
     }
     qDebug()<<11;
+}
+
+void MainWindow::on_miniTable_cellDoubleClicked(int row, int column)
+{
+    if(ui->miniTable->currentRow()>=0){
+        QString code=ui->miniTable->item(ui->miniTable->currentRow(),0)->data(1).toString();
+        if(!code.isEmpty()){
+            QString codec=code.replace("sz","1");
+            codec==codec.replace("sh","0");
+            char*  chSecID;
+            QByteArray baSecID = codec.toLatin1(); // must
+            chSecID=baSecID.data();
+            if(!m_stockWidget){
+                m_stockWidget =new StockCanvas(codec);
+                m_stockWidget->setMinimumSize(400,300);
+            }
+            else {
+                m_stockWidget->setIDandTime(chSecID);
+            }
+            m_stockWidget->setWindowTitle(ui->miniTable->item(ui->miniTable->currentRow(),0)->text());
+            m_stockWidget->show();
+        }
+    }
+
+}
+
+void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
+{
+    if(ui->tableWidget->currentRow()>=0){
+        QString code=ui->tableWidget->item(ui->tableWidget->currentRow(),1)->data(0).toString();
+        if(!code.isEmpty()){
+            QString codec=code.replace("sz","1");
+            codec==codec.replace("sh","0");
+            char*  chSecID;
+            QByteArray baSecID = codec.toLatin1(); // must
+            chSecID=baSecID.data();
+            if(!m_stockWidget){
+                m_stockWidget =new StockCanvas(codec);
+                m_stockWidget->setMinimumSize(400,300);
+            }
+            else {
+                m_stockWidget->setIDandTime(chSecID);
+            }
+            m_stockWidget->setWindowTitle(ui->tableWidget->item(ui->tableWidget->currentRow(),0)->text());
+            m_stockWidget->show();
+        }
+    }
 }

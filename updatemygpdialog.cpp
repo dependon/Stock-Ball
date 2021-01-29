@@ -1,6 +1,7 @@
 #include "updatemygpdialog.h"
 #include "ui_updatemygpdialog.h"
 #include "signalm.h"
+#include "stockView/stockcanvas.h"
 updateMyGpDialog::updateMyGpDialog(DataHaveGP map,QWidget *parent) :
     QDialog(parent),
     m_map(map),
@@ -14,11 +15,22 @@ updateMyGpDialog::updateMyGpDialog(DataHaveGP map,QWidget *parent) :
     double eveNum=m_map.payallPrice/m_map.haveNum;
     ui->eveEdit->setText(QString::number(eveNum));
     setWindowTitle("购买股票配置");
+
+    QString codec=m_map.codec.replace("sz","1");
+    codec==codec.replace("sh","0");
+    char*  chSecID;
+    QByteArray baSecID = codec.toLatin1(); // must
+    chSecID=baSecID.data();
+    m_stockWidget =new StockCanvas(codec);
+    m_stockWidget->setMinimumSize(400,300);
+    ui->stockView->addWidget(m_stockWidget);
 }
 
 
 updateMyGpDialog::~updateMyGpDialog()
 {
+    m_stockWidget->deleteLater();
+    m_stockWidget=nullptr;
     delete ui;
 }
 

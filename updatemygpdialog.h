@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "data.h"
+class StockCanvas;
 namespace Ui {
 class updateMyGpDialog;
 }
@@ -30,6 +31,7 @@ private slots:
 private:
     Ui::updateMyGpDialog *ui;
     DataHaveGP m_map;
+    StockCanvas *m_stockWidget{nullptr};
 };
 
 #endif // UPDATEMYGPDIALOG_H

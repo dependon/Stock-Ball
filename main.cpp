@@ -3,6 +3,7 @@
 #include "data.h"
 #include <QMetaType>
 #include "floatball.h"
+
 Q_DECLARE_METATYPE(MapdataHaveGP);
 Q_DECLARE_METATYPE(MapdataGP);
 Q_DECLARE_METATYPE(DataAllDP);
@@ -21,5 +22,7 @@ int main(int argc, char *argv[])
     floatBall ball;
     ball.show();
 
+//    StockCanvas x("1002624");
+//    x.show();
     return a.exec();
 }

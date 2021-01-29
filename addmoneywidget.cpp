@@ -107,6 +107,7 @@ void addMoneyWidget::replyFinished(QNetworkReply* reply)
             }
         }
     }
+    reply->deleteLater();
 }
 
 void addMoneyWidget::on_cancelBtn_clicked()

@@ -241,6 +241,7 @@ void DataResovle::replyFinished(QNetworkReply* reply)
     MapdataGP mapGp;
     mapGp.map=m_mGp;
     emit signalM::instance()->sendDataGPsChange(mapGp);
+    reply->deleteLater();
 }
 
 void DataResovle::replyFinished2(QNetworkReply *reply)
@@ -295,6 +296,7 @@ void DataResovle::replyFinished2(QNetworkReply *reply)
     MapdataHaveGP mapGp;
     mapGp.map=m_mMyGp;
     emit signalM::instance()->sendDataHaveGPsChange(mapGp);
+    reply->deleteLater();
 }
 void DataResovle::sendHttpData(const QString& str)
 {
@@ -321,7 +323,6 @@ void DataResovle::sendData2()
         reply2=manager2->get(request);
     }
 }
-
 
 void DataResovle::updateData()
 {
