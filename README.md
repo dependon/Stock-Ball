@@ -51,3 +51,5 @@ liuminghang0821@qq.com
 ## 参考
 小球的设计参考
 https://github.com/sonichy/HTYFloatBall
+曲线图参考
+https://github.com/cetcjinjian/QT_StockFigure
