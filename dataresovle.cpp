@@ -128,6 +128,10 @@ void DataResovle::initDB()
         QString str= query.value(0).toString();
         m_mGp.insert(str,DataGP());
     }
+    //添加上证，深圳，创业
+    m_mGp.insert("sh000001",DataGP());
+    m_mGp.insert("sz399001",DataGP());
+    m_mGp.insert("sz399006",DataGP());
 
     QSqlQuery query2;
     query2.exec("select * from haveData");

@@ -42,7 +42,25 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(signalM::instance(),&signalM::sendDataGPsChange,this,&MainWindow::slotDataGPsChange);
     connect(signalM::instance(),&signalM::sendDataHaveGPsChange,this,&MainWindow::slotDataHaveGPsChange);
     connect(signalM::instance(),&signalM::sendDataAllDPChange,this,&MainWindow::slotDataAllDPChange);
+    m_shStock=new StockCanvas();
+    m_shStock->setIDandTime("0000001");
+    m_shStock->setMinimumHeight(300);
+    m_szStock=new StockCanvas();
+    m_szStock->setIDandTime("1399001");
+    m_szStock->setMinimumHeight(300);
+    m_cyStock=new StockCanvas();
+    m_cyStock->setIDandTime("1399006");
+    m_cyStock->setMinimumHeight(300);
 
+    m_shLabel=new QLabel("上证指数");
+    m_szLabel=new QLabel("深圳成指");
+    m_cyLabel=new QLabel("创业板指");
+    ui->shlayout->addWidget(m_shLabel);
+    ui->szlayout->addWidget(m_szLabel);
+    ui->cylayout->addWidget(m_cyLabel);
+    ui->shlayout->addWidget(m_shStock);
+    ui->szlayout->addWidget(m_szStock);
+    ui->cylayout->addWidget(m_cyStock);
     initLeftMenu();
     setWindowTitle("配置界面");
 
@@ -50,6 +68,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    m_shStock->deleteLater();
+    m_shStock=nullptr;
+    m_szStock->deleteLater();
+    m_szStock=nullptr;
+    m_cyStock->deleteLater();
+    m_cyStock=nullptr;
+    m_szLabel->deleteLater();
+    m_szLabel=nullptr;
+    m_shLabel->deleteLater();
+    m_shLabel=nullptr;
+    m_cyLabel->deleteLater();
+    m_cyLabel=nullptr;
 
     delete ui;
 }
@@ -181,6 +211,7 @@ void MainWindow::slotDataGPsChange(MapdataGP map)
 
     m_mGp=map.map;
     refreshNormalWidget();
+    refreshLabel();
 }
 
 void MainWindow::slotDataHaveGPsChange(MapdataHaveGP map)
@@ -356,6 +387,76 @@ void MainWindow::refreshMyhaveWidget()
     }
     cureentInfo="今日总收益:" +QString::number(allgp.todaySY) +" \n" +" 今日收益率"+ todayL;
     //    m_trayIcon->setToolTip(cureentInfo);
+}
+
+void MainWindow::refreshLabel()
+{
+    if(m_shLabel){
+        DataGP gp=m_mGp.value("sh000001");
+
+        double zd=gp.currentPrice.toDouble()-gp.YesterdayClosingPrice.toDouble();
+        QString zdStr=QString::number(zd);
+        double zf=zd*100.0/gp.YesterdayClosingPrice.toDouble();
+        QString zfStr=QString::number(zf,'g',3)+"%";
+        QString sh="上证指数";
+        sh+="\n";
+        sh+=gp.currentPrice;
+        sh+="\n";
+        sh+=zdStr;
+        sh+="\n";
+        sh+=zfStr;
+        m_shLabel->setText(sh);
+        if(zd>0){
+            m_shLabel->setStyleSheet("QLabel { color:red; padding:2px; border:1px solid red; border-radius:15px; }");
+        }
+        else{
+            m_shLabel->setStyleSheet("QLabel { color:green; padding:2px; border:1px solid green; border-radius:15px; }");
+        }
+    }
+    if(m_szLabel){
+        DataGP gp=m_mGp.value("sz399001");
+
+        double zd=gp.currentPrice.toDouble()-gp.YesterdayClosingPrice.toDouble();
+        QString zdStr=QString::number(zd);
+        double zf=zd*100.0/gp.YesterdayClosingPrice.toDouble();
+        QString zfStr=QString::number(zf,'g',3)+"%";
+        QString sz="深圳成指";
+        sz+="\n";
+        sz+=gp.currentPrice;
+        sz+="\n";
+        sz+=zdStr;
+        sz+="\n";
+        sz+=zfStr;
+        m_szLabel->setText(sz);
+        if(zd>0){
+            m_szLabel->setStyleSheet("QLabel { color:red; padding:2px; border:1px solid red; border-radius:15px; }");
+        }
+        else{
+            m_szLabel->setStyleSheet("QLabel { color:green; padding:2px; border:1px solid green; border-radius:15px; }");
+        }
+    }
+    if(m_cyLabel){
+        DataGP gp=m_mGp.value("sz399006");
+
+        double zd=gp.currentPrice.toDouble()-gp.YesterdayClosingPrice.toDouble();
+        QString zdStr=QString::number(zd);
+        double zf=zd*100.0/gp.YesterdayClosingPrice.toDouble();
+        QString zfStr=QString::number(zf,'g',3)+"%";
+        QString cy="创业板指";
+        cy+="\n";
+        cy+=gp.currentPrice;
+        cy+="\n";
+        cy+=zdStr;
+        cy+="\n";
+        cy+=zfStr;
+        m_cyLabel->setText(cy);
+        if(zd>0){
+            m_cyLabel->setStyleSheet("QLabel { color:red; padding:2px; border:1px solid red; border-radius:15px; }");
+        }
+        else{
+            m_cyLabel->setStyleSheet("QLabel { color:green; padding:2px; border:1px solid green; border-radius:15px; }");
+        }
+    }
 };
 
 void MainWindow::on_miniTable_customContextMenuRequested(const QPoint &pos)

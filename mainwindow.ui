@@ -6,16 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>940</width>
-    <height>649</height>
+    <width>1017</width>
+    <height>680</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="viewLayout">
+      <item>
+       <layout class="QVBoxLayout" name="shlayout"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="szlayout"/>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="cylayout"/>
+      </item>
+     </layout>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QPushButton" name="normalBtn">
@@ -33,7 +46,7 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
+    <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
        <number>0</number>
@@ -82,11 +95,11 @@
              <property name="editTriggers">
               <set>QAbstractItemView::NoEditTriggers</set>
              </property>
-             <attribute name="horizontalHeaderDefaultSectionSize">
-              <number>150</number>
-             </attribute>
              <attribute name="horizontalHeaderMinimumSectionSize">
               <number>50</number>
+             </attribute>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>150</number>
              </attribute>
              <column>
               <property name="text">
@@ -241,8 +254,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>940</width>
-     <height>36</height>
+     <width>1017</width>
+     <height>23</height>
     </rect>
    </property>
   </widget>

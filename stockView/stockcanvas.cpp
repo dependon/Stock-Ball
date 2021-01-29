@@ -330,7 +330,6 @@ void StockCanvas::setLSpace(QString &str, int n)
 
 void StockCanvas::DrawTips()
 {
-
     double temp = mousePoint.y() - BORDER_SIZE - COORDINATE_Y1 - 5* yInterval;
     double y_val = - temp * (m_fsjl->info.deal_Start *  m_fsjl->info.deal_rate) / (5* yInterval) + m_fsjl->info.deal_Start;
 

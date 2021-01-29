@@ -13,6 +13,7 @@ class QTimer;
 class QMutex;
 class QTableWidgetItem;
 class StockCanvas;
+class QLabel;
 namespace Ui {
 class MainWindow;
 }
@@ -28,6 +29,8 @@ public:
     void initLeftMenu();
     void refreshNormalWidget();
     void refreshMyhaveWidget();
+
+    void refreshLabel();
 private slots:
     void on_pushButton_clicked();
 
@@ -79,6 +82,14 @@ private:
     QMenu *m_myLeftMenu{nullptr};
 
     StockCanvas *m_stockWidget{nullptr};
+
+    StockCanvas *m_szStock{nullptr};//深圳
+    StockCanvas *m_shStock{nullptr};//上证
+    StockCanvas *m_cyStock{nullptr};//创业
+
+    QLabel *m_szLabel{nullptr};
+    QLabel *m_shLabel{nullptr};
+    QLabel *m_cyLabel{nullptr};
 
 };
 
