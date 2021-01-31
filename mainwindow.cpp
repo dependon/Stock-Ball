@@ -45,22 +45,30 @@ MainWindow::MainWindow(QWidget *parent) :
     m_shStock=new StockCanvas();
     m_shStock->setIDandTime("0000001");
     m_shStock->setMinimumHeight(300);
+    m_shStock->setStatus(ViewStatus::NOLINETIP);
+
     m_szStock=new StockCanvas();
     m_szStock->setIDandTime("1399001");
     m_szStock->setMinimumHeight(300);
+    m_szStock->setStatus(ViewStatus::NOLINETIP);
+
     m_cyStock=new StockCanvas();
     m_cyStock->setIDandTime("1399006");
     m_cyStock->setMinimumHeight(300);
+    m_cyStock->setStatus(ViewStatus::NOLINETIP);
 
     m_shLabel=new QLabel("上证指数");
     m_szLabel=new QLabel("深圳成指");
     m_cyLabel=new QLabel("创业板指");
+
     ui->shlayout->addWidget(m_shLabel);
     ui->szlayout->addWidget(m_szLabel);
     ui->cylayout->addWidget(m_cyLabel);
+
     ui->shlayout->addWidget(m_shStock);
     ui->szlayout->addWidget(m_szStock);
     ui->cylayout->addWidget(m_cyStock);
+
     initLeftMenu();
     setWindowTitle("配置界面");
 

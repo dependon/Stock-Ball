@@ -24,6 +24,10 @@
 //const int iCoordinate_top_y    = 40;    //网格距上边距离
 //const int iCoordinate_bottom_y = 20;    //网格距下边距离
 
+enum ViewStatus{
+    NORMAL,
+    NOLINETIP
+};
 
 class StockCanvas : public QWidget
 {
@@ -31,7 +35,10 @@ class StockCanvas : public QWidget
 public:
     StockCanvas(const QString & SecID="0000001",const QString & szDate=nullptr,QWidget *parent = nullptr);
     void setIDandTime(const QString & SecID="0000001",const QString & szDate=nullptr);
+    void setStatus(ViewStatus status);
+    signals:
 
+    public slots:
 private:
     void virtual paintEvent(QPaintEvent* event);
     void virtual resizeEvent(QResizeEvent * event);
@@ -71,9 +78,9 @@ private:
 
     QString m_szSecID;
     QString m_szDate;
-signals:
 
-public slots:
+    ViewStatus m_viewStatus{ViewStatus::NORMAL};
+
 };
 
 #endif // STOCKCANVAS_H

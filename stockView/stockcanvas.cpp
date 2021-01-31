@@ -33,6 +33,11 @@ void StockCanvas::setIDandTime(const QString &SecID, const QString &szDate)
      m_fsjl->setData(m_szSecID,m_szDate);
 }
 
+void StockCanvas::setStatus(ViewStatus status)
+{
+    m_viewStatus=status;
+}
+
 void StockCanvas::paintEvent(QPaintEvent *event)
 {
     DrawBK();
@@ -150,16 +155,18 @@ void StockCanvas:: mouseMoveEvent(QMouseEvent* event)
 //画跟随鼠标的十字线
 void StockCanvas::DrawMouseLine()
 {
-    QLineF linex(0+BORDER_SIZE+COORDINATE_X1,mousePoint.y(),this->width()-(BORDER_SIZE+COORDINATE_X1),mousePoint.y());
-    QLineF liney(mousePoint.x(),BORDER_SIZE+COORDINATE_Y1,mousePoint.x(),this->height()-(BORDER_SIZE+COORDINATE_Y2));
-    QPainter painter(this);
-    QPen     pen;
-    pen.setColor(QColor("#FFFFFF"));
-    pen.setWidth(1);
-    painter.setPen(pen);
-    painter.drawLine(linex);
-    painter.drawLine(liney);
-    DrawTips();
+    if(m_viewStatus!=ViewStatus::NOLINETIP){
+        QLineF linex(0+BORDER_SIZE+COORDINATE_X1,mousePoint.y(),this->width()-(BORDER_SIZE+COORDINATE_X1),mousePoint.y());
+        QLineF liney(mousePoint.x(),BORDER_SIZE+COORDINATE_Y1,mousePoint.x(),this->height()-(BORDER_SIZE+COORDINATE_Y2));
+        QPainter painter(this);
+        QPen     pen;
+        pen.setColor(QColor("#FFFFFF"));
+        pen.setWidth(1);
+        painter.setPen(pen);
+        painter.drawLine(linex);
+        painter.drawLine(liney);
+        DrawTips();
+    }
 }
 
 
@@ -330,81 +337,79 @@ void StockCanvas::setLSpace(QString &str, int n)
 
 void StockCanvas::DrawTips()
 {
-    double temp = mousePoint.y() - BORDER_SIZE - COORDINATE_Y1 - 5* yInterval;
-    double y_val = - temp * (m_fsjl->info.deal_Start *  m_fsjl->info.deal_rate) / (5* yInterval) + m_fsjl->info.deal_Start;
+    if(m_viewStatus!=ViewStatus::NOLINETIP){
+        double temp = mousePoint.y() - BORDER_SIZE - COORDINATE_Y1 - 5* yInterval;
+        double y_val = - temp * (m_fsjl->info.deal_Start *  m_fsjl->info.deal_rate) / (5* yInterval) + m_fsjl->info.deal_Start;
 
-    double y_valPCT = ( y_val  - m_fsjl->info.deal_Start ) / m_fsjl->info.deal_Start;
-
-
-    y_val/= 1000;
-    y_valPCT*= 100;
+        double y_valPCT = ( y_val  - m_fsjl->info.deal_Start ) / m_fsjl->info.deal_Start;
 
 
+        y_val/= 1000;
+        y_valPCT*= 100;
 
+        //两侧价格和百分比显示
 
-
-    //两侧价格和百分比显示
-
-    int iTipsWidth  = 60;
-    int iTipsHeight = 20;
-    QRect rect(0+BORDER_SIZE+COORDINATE_X1-TEXT_LENGTH-15,
-               mousePoint.y() - iTipsHeight / 2 ,iTipsWidth,iTipsHeight);
-    QPainter painter(this);
-    QPen     pen;
-    pen.setColor(Qt::white);
+        int iTipsWidth  = 60;
+        int iTipsHeight = 20;
+        QRect rect(0+BORDER_SIZE+COORDINATE_X1-TEXT_LENGTH-15,
+                   mousePoint.y() - iTipsHeight / 2 ,iTipsWidth,iTipsHeight);
+        QPainter painter(this);
+        QPen     pen;
+        pen.setColor(Qt::white);
 
 
 
-    if( y_valPCT > 0)
-    {
+        if( y_valPCT > 0)
+        {
+            QBrush brush(Qt::red);
+            painter.setBrush(brush);
+        }
+        else
+        {
+            QBrush brush(Qt::blue);
+            painter.setBrush(brush);
+        }
+
+
+        pen.setWidth(1);
+        painter.setPen(pen);
+        painter.drawRect(rect);
+        QString text;
+        text.sprintf("%.2f",y_val);
+        painter.drawText(rect,Qt::AlignCenter,text);
+
+
+        QRect rect2(m_windowWidth - BORDER_SIZE - COORDINATE_X2,
+                    mousePoint.y() - iTipsHeight / 2 ,iTipsWidth,iTipsHeight);
+        painter.drawRect(rect2);
+        text.sprintf("%.2f",y_valPCT);
+        painter.drawText(rect2,Qt::AlignCenter,text);
+
+
+
+
+        //底部时间显示
+
+        double temp2 = float( mousePoint.x() - BORDER_SIZE - COORDINATE_X1 ) / (m_windowWidth - 2*BORDER_SIZE - COORDINATE_X1 - COORDINATE_X2 ) * 4;
+        if( temp2 > 2)
+            temp2 += 1.5;
+
+
+        QDateTime time = QDateTime::fromString("09:30","HH:mm");
+        QDateTime newTime;
+        newTime = time.addSecs(temp2 * 60 * 60 );
+        text = newTime.toString("HH:mm");
+
+
+
         QBrush brush(Qt::red);
         painter.setBrush(brush);
+        //    painter.setPen(pen);
+        QRect rect3( mousePoint.x() - iTipsWidth/2 , m_windowHeight - BORDER_SIZE - COORDINATE_Y2,
+                     iTipsWidth , iTipsHeight);
+        painter.drawRect(rect3);
+        painter.drawText(rect3,text);
     }
-    else
-    {
-        QBrush brush(Qt::blue);
-        painter.setBrush(brush);
-    }
-
-
-    pen.setWidth(1);
-    painter.setPen(pen);
-    painter.drawRect(rect);
-    QString text;
-    text.sprintf("%.2f",y_val);
-    painter.drawText(rect,Qt::AlignCenter,text);
-
-
-    QRect rect2(m_windowWidth - BORDER_SIZE - COORDINATE_X2,
-                mousePoint.y() - iTipsHeight / 2 ,iTipsWidth,iTipsHeight);
-    painter.drawRect(rect2);
-    text.sprintf("%.2f",y_valPCT);
-    painter.drawText(rect2,Qt::AlignCenter,text);
-
-
-
-
-    //底部时间显示
-
-    double temp2 = float( mousePoint.x() - BORDER_SIZE - COORDINATE_X1 ) / (m_windowWidth - 2*BORDER_SIZE - COORDINATE_X1 - COORDINATE_X2 ) * 4;
-    if( temp2 > 2)
-        temp2 += 1.5;
-
-
-    QDateTime time = QDateTime::fromString("09:30","HH:mm");
-    QDateTime newTime;
-    newTime = time.addSecs(temp2 * 60 * 60 );
-    text = newTime.toString("HH:mm");
-
-
-
-    QBrush brush(Qt::red);
-    painter.setBrush(brush);
-    //    painter.setPen(pen);
-    QRect rect3( mousePoint.x() - iTipsWidth/2 , m_windowHeight - BORDER_SIZE - COORDINATE_Y2,
-                 iTipsWidth , iTipsHeight);
-    painter.drawRect(rect3);
-    painter.drawText(rect3,text);
 
 }
 
