@@ -277,7 +277,7 @@ void StockCanvas::DrawFSJL(const QString& SecID,const QString&  szDate)
 //        p1 = p2;
 //    }
 //    m_fsjl->fsjl
-    int index=1;
+    int index=0;
     for( auto fj : m_fsjl->fsjl)
     {
         if( 240 == index ){
@@ -287,7 +287,12 @@ void StockCanvas::DrawFSJL(const QString& SecID,const QString&  szDate)
         }
         double tempRate = float(fj.Deal - m_fsjl->info.deal_Start) / m_fsjl->info.deal_Start;
         p2.setY( zeroY - tempRate / m_fsjl->info.deal_rate * 5* yInterval ) ;
-        painter.drawLine(p1,p2);
+        //第一个位置画点，不画折线
+        if(0==index){
+            painter.drawPoint(p2);
+        }else{
+            painter.drawLine(p1,p2);
+        }
         p1 = p2;
         index++;
     }

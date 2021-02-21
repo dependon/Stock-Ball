@@ -33,7 +33,9 @@ void stockViewData::GetFSJLINFO()
         return;
     }
     double UpRate = 0, DnRate = 0;
-    info.deal_Start = info.deal_Max = info.deal_Min = fsjl[0].Deal;
+
+    //排头不应该是今日开的价格
+    //info.deal_Start = info.deal_Max = info.deal_Min = fsjl[0].Deal;
     info.vol_Max = info.vol_Min = 0;
 
     for( auto fs: fsjl )
@@ -74,9 +76,13 @@ void stockViewData::replyFinished(QNetworkReply *reply)
     QString symbol=json.object().value("symbol").toString();
     int lastVolume=json.object().value("lastVolume").toInt();
     QString name=json.object().value("name").toString();
-    int yestclose=json.object().value("yestclose").toInt();
+    double yestclose=json.object().value("yestclose").toDouble();
     int count=json.object().value("count").toInt();
     QJsonArray data=json.object().value("data").toArray();
+
+    //设置中线位置
+    info.deal_Start = info.deal_Max = info.deal_Min = yestclose*1000;
+
     for(QJsonValue value:data){
         FSJL jl;
 
