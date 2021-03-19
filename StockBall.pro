@@ -35,7 +35,8 @@ SOURCES += \
     floatball.cpp \
     updatemygpdialog.cpp \
     stockView/stockcanvas.cpp \
-    stockView/stockviewdata.cpp
+    stockView/stockviewdata.cpp \
+    stockKlineView/stockklineviewdata.cpp
 
 HEADERS += \
         addmoneywidget.h \
@@ -47,7 +48,8 @@ HEADERS += \
     floatball.h \
     updatemygpdialog.h \
     stockView/stockcanvas.h \
-    stockView/stockviewdata.h
+    stockView/stockviewdata.h \
+    stockKlineView/stockklineviewdata.h
 
 FORMS += \
         addmoneywidget.ui \
