@@ -36,7 +36,13 @@ SOURCES += \
     updatemygpdialog.cpp \
     stockView/stockcanvas.cpp \
     stockView/stockviewdata.cpp \
-    stockKlineView/stockklineviewdata.cpp
+    stockKlineView/autogrid.cpp \
+    stockKlineView/datafile.cpp \
+    stockKlineView/klinegrid.cpp \
+    stockKlineView/kvolumegrid.cpp \
+    stockKlineView/showdetail.cpp \
+    stockKlineView/stockklineviewdata.cpp \
+    stackstock.cpp
 
 HEADERS += \
         addmoneywidget.h \
@@ -49,12 +55,19 @@ HEADERS += \
     updatemygpdialog.h \
     stockView/stockcanvas.h \
     stockView/stockviewdata.h \
-    stockKlineView/stockklineviewdata.h
+    stockKlineView/klinegrid.h \
+    stockKlineView/autogrid.h \
+    stockKlineView/datafile.h \
+    stockKlineView/kvolumegrid.h \
+    stockKlineView/showdetail.h \
+    stockKlineView/stockklineviewdata.h \
+    stackstock.h
 
 FORMS += \
         addmoneywidget.ui \
         mainwindow.ui \
-        updatemygpdialog.ui
+        updatemygpdialog.ui \
+    stackstock.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

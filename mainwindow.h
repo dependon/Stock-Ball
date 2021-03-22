@@ -14,6 +14,7 @@ class QMutex;
 class QTableWidgetItem;
 class StockCanvas;
 class QLabel;
+class stackStock;
 namespace Ui {
 class MainWindow;
 }
@@ -81,11 +82,12 @@ private:
     QMenu *m_normalLeftMenu{nullptr};
     QMenu *m_myLeftMenu{nullptr};
 
-    StockCanvas *m_stockWidget{nullptr};
+//    StockCanvas *m_stockWidget{nullptr};
+    stackStock *m_stockWidget{nullptr};
 
-    StockCanvas *m_szStock{nullptr};//深圳
-    StockCanvas *m_shStock{nullptr};//上证
-    StockCanvas *m_cyStock{nullptr};//创业
+    stackStock *m_szStock{nullptr};//深圳
+    stackStock *m_shStock{nullptr};//上证
+    stackStock *m_cyStock{nullptr};//创业
 
     QLabel *m_szLabel{nullptr};
     QLabel *m_shLabel{nullptr};

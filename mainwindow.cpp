@@ -22,6 +22,7 @@
 #include <application.h>
 #include <addmoneywidget.h>
 #include "signalm.h"
+#include "stackstock.h"
 #include "updatemygpdialog.h"
 #include "stockView/stockcanvas.h"
 MainWindow::MainWindow(QWidget *parent) :
@@ -42,20 +43,20 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(signalM::instance(),&signalM::sendDataGPsChange,this,&MainWindow::slotDataGPsChange);
     connect(signalM::instance(),&signalM::sendDataHaveGPsChange,this,&MainWindow::slotDataHaveGPsChange);
     connect(signalM::instance(),&signalM::sendDataAllDPChange,this,&MainWindow::slotDataAllDPChange);
-    m_shStock=new StockCanvas();
-    m_shStock->setIDandTime("0000001");
+    m_shStock=new stackStock();
+    m_shStock->setData("sh000001");
     m_shStock->setMinimumHeight(300);
-    m_shStock->setStatus(ViewStatus::NOLINETIP);
+//    m_shStock->setStatus(ViewStatus::NOLINETIP);
 
-    m_szStock=new StockCanvas();
-    m_szStock->setIDandTime("1399001");
+    m_szStock=new stackStock();
+    m_szStock->setData("sz399001");
     m_szStock->setMinimumHeight(300);
-    m_szStock->setStatus(ViewStatus::NOLINETIP);
+//    m_szStock->setStatus(ViewStatus::NOLINETIP);
 
-    m_cyStock=new StockCanvas();
-    m_cyStock->setIDandTime("1399006");
+    m_cyStock=new stackStock();
+    m_cyStock->setData("sz399006");
     m_cyStock->setMinimumHeight(300);
-    m_cyStock->setStatus(ViewStatus::NOLINETIP);
+//    m_cyStock->setStatus(ViewStatus::NOLINETIP);
 
     m_shLabel=new QLabel("上证指数");
     m_szLabel=new QLabel("深圳成指");
@@ -70,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->cylayout->addWidget(m_cyStock);
 
     initLeftMenu();
-    setWindowTitle("配置界面");
+    setWindowTitle("摸鱼股票球");
 
 }
 
@@ -501,17 +502,21 @@ void MainWindow::on_miniTable_cellDoubleClicked(int row, int column)
     if(ui->miniTable->currentRow()>=0){
         QString code=ui->miniTable->item(ui->miniTable->currentRow(),0)->data(1).toString();
         if(!code.isEmpty()){
+            QString codecS=code;
             QString codec=code.replace("sz","1");
             codec==codec.replace("sh","0");
             char*  chSecID;
             QByteArray baSecID = codec.toLatin1(); // must
             chSecID=baSecID.data();
             if(!m_stockWidget){
-                m_stockWidget =new StockCanvas(codec);
+//                m_stockWidget =new StockCanvas(codec);
+                m_stockWidget =new stackStock();
                 m_stockWidget->setMinimumSize(400,300);
+                m_stockWidget->setData(codecS);
             }
             else {
-                m_stockWidget->setIDandTime(chSecID);
+//                m_stockWidget->setIDandTime(chSecID);
+                m_stockWidget->setData(codecS);
             }
             m_stockWidget->setWindowTitle(ui->miniTable->item(ui->miniTable->currentRow(),0)->text());
             m_stockWidget->show();
@@ -525,17 +530,21 @@ void MainWindow::on_tableWidget_cellDoubleClicked(int row, int column)
     if(ui->tableWidget->currentRow()>=0){
         QString code=ui->tableWidget->item(ui->tableWidget->currentRow(),1)->data(0).toString();
         if(!code.isEmpty()){
+            QString codecS=code;
             QString codec=code.replace("sz","1");
             codec==codec.replace("sh","0");
             char*  chSecID;
             QByteArray baSecID = codec.toLatin1(); // must
             chSecID=baSecID.data();
             if(!m_stockWidget){
-                m_stockWidget =new StockCanvas(codec);
+//                m_stockWidget =new StockCanvas(codec);
+                m_stockWidget =new stackStock();
                 m_stockWidget->setMinimumSize(400,300);
+                m_stockWidget->setData(codecS);
             }
             else {
-                m_stockWidget->setIDandTime(chSecID);
+//                m_stockWidget->setIDandTime(chSecID);
+                m_stockWidget->setData(codecS);
             }
             m_stockWidget->setWindowTitle(ui->tableWidget->item(ui->tableWidget->currentRow(),0)->text());
             m_stockWidget->show();

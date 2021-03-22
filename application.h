@@ -13,7 +13,9 @@ class application:public QApplication
 public:
     application(int& argc, char **argv);
 
-
+    QString getCurrentTime();
+    QString getLastMonthTime();
+    QString getLastYearTime();
     signalM *m_signal{nullptr};
     DataResovle *m_dataresovle{nullptr};
 };
