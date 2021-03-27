@@ -70,6 +70,15 @@ FORMS += \
     stackstock.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+
+
+other.path=/opt/durapps/stockball
+other.files= $$PWD/../install/*
+
+desktop.path = /usr/share/applications/
+desktop.files = $$PWD/../install/stockball.desktop
+
+
+qnx: target.path = /opt/durapps/stockball
+else: unix:!android: target.path = /opt/durapps/stockball
+!isEmpty(target.path): INSTALLS += target other desktop

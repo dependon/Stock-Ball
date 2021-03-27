@@ -29,7 +29,7 @@ vendor/lib/*
 *.log
 
 # debian
-debian/*
+#debian/*
 !debian/changelog
 !debian/rules
 !debian/control

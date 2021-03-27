@@ -1,0 +1,16 @@
+[Desktop Entry]
+Categories=stockball;
+Comment=stockball
+Comment[zh_CN]=摸鱼股票球
+Encoding=UTF-8
+Exec=/opt/durapps/stockball/stockball
+GenericName=stockball
+GenericName[zh_CN]=摸鱼股票球
+Icon=/opt/durapps/stockball/stock.png
+Name=stockball
+Name[zh_CN]=摸鱼股票球
+StartupNotify=false
+Terminal=false
+Type=Application
+Version=1.0.0.0
+X-Deepin-Vendor=user-custom
