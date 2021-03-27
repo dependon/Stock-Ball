@@ -1,0 +1,12 @@
+Source: stockball
+Section: utils
+Priority: optional
+Maintainer: kirigaya <kirigaya@mkacg.com>
+Build-Depends: debhelper (>= 9),pkg-config, dpkg-dev, qt5-qmake, qtbase5-dev, qttools5-dev-tools
+Standards-Version: 0.0-3
+Homepage: http://blog.mkacg.com
+
+Package: stockball
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: 摸鱼股票球.
