@@ -5,8 +5,7 @@
 #include <QPen>
 #include <QString>
 
-
-kVolumeGrid::kVolumeGrid(QWidget* parent) : AutoGrid( parent)
+kVolumeGrid::kVolumeGrid(QWidget *parent) : AutoGrid(parent)
 {
     setAtomGridHeightMin(40);
     initial();
@@ -47,7 +46,7 @@ void kVolumeGrid::initial()
 
 bool kVolumeGrid::readData(QString strFile)
 {
-    if( mDataFile.readData(strFile) )
+    if (mDataFile.readData(strFile))
         return true;
     else
         return false;
@@ -55,12 +54,12 @@ bool kVolumeGrid::readData(QString strFile)
 
 bool kVolumeGrid::readData(std::vector<KLine> datas)
 {
-    bool bRet=false;
-    bRet= mDataFile.readData(datas);
+    bool bRet = false;
+    bRet = mDataFile.readData(datas);
     endDay = mDataFile.kline.size() - 1;
     totalDay = mDataFile.kline.size();
     beginDay  = 0;
-    currentDay = beginDay + totalDay /2;
+    currentDay = beginDay + totalDay / 2;
     maxVolume = 0;
     update();
     return bRet;
@@ -69,13 +68,12 @@ bool kVolumeGrid::readData(std::vector<KLine> datas)
 void kVolumeGrid::getIndicator()
 {
     maxVolume = 0;
-    for(int i=beginDay;i<endDay;++i)
-    {
+    for (int i = beginDay; i < endDay; ++i) {
         QString strVolume = mDataFile.kline[i].totalVolume;
-        strVolume = strVolume.mid(1,strVolume.length());
-        strVolume = strVolume.mid(0,strVolume.length()-1);
-        strVolume.replace(QString(","),QString(""));
-        if( strVolume.toInt() > maxVolume)
+        strVolume = strVolume.mid(1, strVolume.length());
+        strVolume = strVolume.mid(0, strVolume.length() - 1);
+        strVolume.replace(QString(","), QString(""));
+        if (strVolume.toInt() > maxVolume)
             maxVolume = strVolume.toInt();
     }
     maxVolume = maxVolume / 100;
@@ -92,12 +90,11 @@ void kVolumeGrid::drawYtick()
     painter.setPen(pen);
     double ystep = maxVolume / getHGridNum() ;
     QString str;
-    for( int i=0;i<=getHGridNum();++i)
-    {
-        str.sprintf("%d", (int)(i*ystep) );
-        painter.drawText( QPoint( getWidgetWidth() - getMarginLeft() + 10,
-                                  getWidgetHeight() - getMarginBottom() - i*getAtomGridHeight()),
-                          str);
+    for (int i = 0; i <= getHGridNum(); ++i) {
+        str.sprintf("%d", (int)(i * ystep));
+        painter.drawText(QPoint(getWidgetWidth() - getMarginLeft() + 10,
+                                getWidgetHeight() - getMarginBottom() - i * getAtomGridHeight()),
+                         str);
     }
 }
 void kVolumeGrid::drawVolume()
@@ -109,10 +106,9 @@ void kVolumeGrid::drawVolume()
     double xstep = getGridWidth() / totalDay;
     double yscale = getGridHeight() / maxVolume;
 
-    for( int i= beginDay;i<endDay;++i)
-    {
-        if( mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice )
-            pen.setColor(QColor(85,252,252));
+    for (int i = beginDay; i < endDay; ++i) {
+        if (mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice)
+            pen.setColor(QColor(85, 252, 252));
         else
             pen.setColor(Qt::red);
 
@@ -120,10 +116,10 @@ void kVolumeGrid::drawVolume()
         lineWidth = getGridWidth() / totalDay;
 
         //为了各个k线之间不贴在一起，设置一个间隔
-        lineWidth = lineWidth - 0.2*lineWidth;
+        lineWidth = lineWidth - 0.2 * lineWidth;
 
         //最小线宽为3
-        if( lineWidth < 3)
+        if (lineWidth < 3)
             lineWidth = 3;
 
 
@@ -137,52 +133,51 @@ void kVolumeGrid::drawVolume()
 
 
         QString strtemp = mDataFile.kline[i].totalVolume;
-        strtemp = strtemp.mid(1,strtemp.length());
-        strtemp = strtemp.mid(0,strtemp.length()-1);
-        strtemp.replace(QString(","),QString(""));
-        int temp = strtemp.toInt()/100;
+        strtemp = strtemp.mid(1, strtemp.length());
+        strtemp = strtemp.mid(0, strtemp.length() - 1);
+        strtemp.replace(QString(","), QString(""));
+        int temp = strtemp.toInt() / 100;
 
 
         //阴线
 
-        if( mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice )
-        {
+        if (mDataFile.kline[i].openingPrice > mDataFile.kline[i].closeingPrice) {
             pen.setWidth(lineWidth);
             painter.setPen(pen);
-            p1.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-            p1.setY( getWidgetHeight() - (temp ) *yscale - getMarginBottom());
-            p2.setX( getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-            p2.setY( getWidgetHeight()  - getMarginBottom() - 0.5*lineWidth);
-            painter.drawLine(p1,p2);
+            p1.setX(getMarginLeft() + xstep * (i - beginDay) + 0.5 * lineWidth);
+            p1.setY(getWidgetHeight() - (temp) *yscale - getMarginBottom());
+            p2.setX(getMarginLeft() + xstep * (i - beginDay) + 0.5 * lineWidth);
+            p2.setY(getWidgetHeight()  - getMarginBottom() - 0.5 * lineWidth);
+            painter.drawLine(p1, p2);
 
         }
 
 
         //阳线
-        else
-        {
+        else {
             pen.setWidth(1);
             painter.setPen(pen);
 
-            p1.setX( getMarginLeft() + xstep *(i - beginDay) );
-            p1.setY( getWidgetHeight() - (temp ) *yscale - getMarginBottom());
-            p2.setX(getMarginLeft() + xstep *(i - beginDay) + lineWidth);
-            p2.setY( getWidgetHeight() - (temp ) *yscale - getMarginBottom());
-            p3.setX( getMarginLeft() + xstep *(i - beginDay) );
-            p3.setY( getWidgetHeight()  - getMarginBottom() );
-            p4.setX( getMarginLeft() + xstep *(i - beginDay) + lineWidth);
-            p4.setY( getWidgetHeight()  - getMarginBottom() );
+            p1.setX(getMarginLeft() + xstep * (i - beginDay));
+            p1.setY(getWidgetHeight() - (temp) *yscale - getMarginBottom());
+            p2.setX(getMarginLeft() + xstep * (i - beginDay) + lineWidth);
+            p2.setY(getWidgetHeight() - (temp) *yscale - getMarginBottom());
+            p3.setX(getMarginLeft() + xstep * (i - beginDay));
+            p3.setY(getWidgetHeight()  - getMarginBottom());
+            p4.setX(getMarginLeft() + xstep * (i - beginDay) + lineWidth);
+            p4.setY(getWidgetHeight()  - getMarginBottom());
 
-            painter.drawLine(p1,p2);
-            painter.drawLine(p1,p3);
-            painter.drawLine(p2,p4);
-            painter.drawLine(p3,p4);
+            painter.drawLine(p1, p2);
+            painter.drawLine(p1, p3);
+            painter.drawLine(p2, p4);
+            painter.drawLine(p3, p4);
 
         }
     }
 }
 
-void kVolumeGrid::drawAverageLine(int day){
+void kVolumeGrid::drawAverageLine(int day)
+{
 
 
 
@@ -199,25 +194,22 @@ void kVolumeGrid::drawAverageLine(int day){
 
 
 
-    switch(day)
-    {
+    switch (day) {
     case 5:
-        for( int i= beginDay;i<endDay;++i)
-        {
-            if( mDataFile.kline[i].volumeAverage5 == 0)
+        for (int i = beginDay; i < endDay; ++i) {
+            if (mDataFile.kline[i].volumeAverage5 == 0)
                 continue;
-            temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-            temp.setY(getWidgetHeight() - mDataFile.kline[i].volumeAverage5 /100 *yscale - getMarginBottom());
+            temp.setX(getMarginLeft() + xstep * (i - beginDay) + 0.5 * lineWidth);
+            temp.setY(getWidgetHeight() - mDataFile.kline[i].volumeAverage5 / 100 * yscale - getMarginBottom());
             point.push_back(temp);
         }
         break;
     case 10:
-        for( int i= beginDay;i<endDay;++i)
-        {
-            if( mDataFile.kline[i].volumeAverage10 == 0)
+        for (int i = beginDay; i < endDay; ++i) {
+            if (mDataFile.kline[i].volumeAverage10 == 0)
                 continue;
-            temp.setX(getMarginLeft() + xstep *(i - beginDay) + 0.5*lineWidth);
-            temp.setY(getWidgetHeight() - mDataFile.kline[i].volumeAverage10 /100 *yscale - getMarginBottom());
+            temp.setX(getMarginLeft() + xstep * (i - beginDay) + 0.5 * lineWidth);
+            temp.setY(getWidgetHeight() - mDataFile.kline[i].volumeAverage10 / 100 * yscale - getMarginBottom());
             point.push_back(temp);
         }
         break;
@@ -226,8 +218,7 @@ void kVolumeGrid::drawAverageLine(int day){
     QPainter painter(this);
     QPen     pen;
 
-    switch(day)
-    {
+    switch (day) {
     case 5:
         pen.setColor(Qt::white);
         break;

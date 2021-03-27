@@ -5,19 +5,19 @@
 
 DataFile::DataFile()
 {
-        m_mutex=new QMutex();
+    m_mutex = new QMutex();
 }
 
 
 DataFile::~DataFile()
 {
-    if(pfile){
+    if (pfile) {
         delete pfile;
         pfile = nullptr;
     }
 
     delete m_mutex;
-    m_mutex=nullptr;
+    m_mutex = nullptr;
 }
 
 bool DataFile::readData(QString filestr)
@@ -93,7 +93,7 @@ bool DataFile::readData(QString filestr)
 bool DataFile::readData(std::vector<KLine> datas)
 {
     QMutexLocker locker(m_mutex);
-    kline=datas;
+    kline = datas;
     calAverageLine();
     Corvert();
     calvolumeAverage5();
@@ -104,21 +104,21 @@ bool DataFile::readData(std::vector<KLine> datas)
 
 void DataFile::calAverageLine()
 {
-    if(kline.size()>0){
+    if (kline.size() > 0) {
         // 初始化各均线的值
-        for(int i=0;i<4;i++)
+        for (int i = 0; i < 4; i++)
             kline[i].averageLine5 = 0;
 
-        for(int i=0;i<9;i++)
+        for (int i = 0; i < 9; i++)
             kline[i].averageLine10 = 0;
 
-        for(int i=0;i<19;i++)
+        for (int i = 0; i < 19; i++)
             kline[i].averageLine20 = 0;
 
-        for(int i=0;i<29;i++)
+        for (int i = 0; i < 29; i++)
             kline[i].averageLine30 = 0;
 
-        for(int i=0;i<59;i++)
+        for (int i = 0; i < 59; i++)
             kline[i].averageLine60 = 0;
 
 
@@ -134,28 +134,24 @@ void DataFile::calAverageLine()
 
 void DataFile::calAverageLine5()
 {
-    for( int i=4;i<kline.size();++i)
-    {
+    for (int i = 4; i < kline.size(); ++i) {
         double sum = 0;
-        for(int j=i-4;j<=i;++j)
-        {
+        for (int j = i - 4; j <= i; ++j) {
             sum += kline[j].closeingPrice;
         }
-        kline[i].averageLine5 = sum /5;
+        kline[i].averageLine5 = sum / 5;
     }
 }
 
 
 void DataFile::calAverageLine10()
 {
-    for( int i=9;i<kline.size();++i)
-    {
+    for (int i = 9; i < kline.size(); ++i) {
         double sum = 0;
-        for(int j=i-9;j<=i;++j)
-        {
+        for (int j = i - 9; j <= i; ++j) {
             sum += kline[j].closeingPrice;
         }
-        kline[i].averageLine10 = sum /10;
+        kline[i].averageLine10 = sum / 10;
     }
 }
 
@@ -164,28 +160,24 @@ void DataFile::calAverageLine10()
 
 void DataFile::calAverageLine20()
 {
-    for( int i=19;i<kline.size();++i)
-    {
+    for (int i = 19; i < kline.size(); ++i) {
         double sum = 0;
-        for(int j=i-19;j<=i;++j)
-        {
+        for (int j = i - 19; j <= i; ++j) {
             sum += kline[j].closeingPrice;
         }
-        kline[i].averageLine20 = sum /20;
+        kline[i].averageLine20 = sum / 20;
     }
 }
 
 
 void DataFile::calAverageLine30()
 {
-    for( int i=29;i<kline.size();++i)
-    {
+    for (int i = 29; i < kline.size(); ++i) {
         double sum = 0;
-        for(int j=i-29;j<=i;++j)
-        {
+        for (int j = i - 29; j <= i; ++j) {
             sum += kline[j].closeingPrice;
         }
-        kline[i].averageLine30 = sum /30;
+        kline[i].averageLine30 = sum / 30;
     }
 }
 
@@ -193,28 +185,24 @@ void DataFile::calAverageLine30()
 
 void DataFile::calAverageLine60()
 {
-    for( int i=59;i<kline.size();++i)
-    {
+    for (int i = 59; i < kline.size(); ++i) {
         double sum = 0;
-        for(int j=i-59;j<=i;++j)
-        {
+        for (int j = i - 59; j <= i; ++j) {
             sum += kline[j].closeingPrice;
         }
-        kline[i].averageLine60 = sum /60;
+        kline[i].averageLine60 = sum / 60;
     }
 }
 
 void DataFile::calvolumeAverage5()
 {
 
-    for( int i=4;i<kline.size();++i)
-    {
+    for (int i = 4; i < kline.size(); ++i) {
         double sum = 0;
-        for(int j=i-4;j<=i;++j)
-        {
+        for (int j = i - 4; j <= i; ++j) {
             sum += kline[j].ftotalVolume;
         }
-        kline[i].volumeAverage5 = sum /5;
+        kline[i].volumeAverage5 = sum / 5;
     }
 
 
@@ -223,26 +211,23 @@ void DataFile::calvolumeAverage5()
 
 void DataFile::calvolumeAverage10()
 {
-    for( int i=9;i<kline.size();++i)
-    {
+    for (int i = 9; i < kline.size(); ++i) {
         double sum = 0;
-        for(int j=i-9;j<=i;++j)
-        {
+        for (int j = i - 9; j <= i; ++j) {
             sum += kline[j].ftotalVolume;
         }
-        kline[i].volumeAverage10 = sum /10;
+        kline[i].volumeAverage10 = sum / 10;
     }
 }
 
 void DataFile::Corvert()
 {
-    for(int i=0;i<kline.size();++i)
-    {
+    for (int i = 0; i < kline.size(); ++i) {
         QString strtemp = kline[i].totalVolume;
-        strtemp = strtemp.mid(1,strtemp.length());
-        strtemp = strtemp.mid(0,strtemp.length()-1);
-        strtemp.replace(QString(","),QString(""));
-        kline[i].ftotalVolume= strtemp.toInt();
+        strtemp = strtemp.mid(1, strtemp.length());
+        strtemp = strtemp.mid(0, strtemp.length() - 1);
+        strtemp.replace(QString(","), QString(""));
+        kline[i].ftotalVolume = strtemp.toInt();
     }
 }
 

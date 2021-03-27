@@ -1,11 +1,13 @@
 #include "mainwindow.h"
-#include <application.h>
+#include "application.h"
 #include "data.h"
-#include <QMetaType>
 #include "floatball.h"
 #include "stackstock.h"
 #include "stockKlineView/stockklineviewdata.h"
+
+#include <QMetaType>
 #include <QDateTime>
+
 Q_DECLARE_METATYPE(MapdataHaveGP);
 Q_DECLARE_METATYPE(MapdataGP);
 Q_DECLARE_METATYPE(DataAllDP);
