@@ -39,7 +39,9 @@ floatBall::floatBall(QWidget *parent):
     m_floatShowLabel->setStyleSheet("QLabel { padding:2px; color:white; background-color:rgba(0,0,0,200); border-radius:15px; }");//无效
 
     m_trayIcon = new QSystemTrayIcon(this);
-    m_trayIcon->setToolTip("test");
+    m_trayIcon->setToolTip("摸鱼股票球");
+    QIcon icon(":/stock.png");
+    m_trayIcon->setIcon(icon);
     m_trayIcon->show();
 
     m_mainWindow = new MainWindow();
@@ -236,33 +238,33 @@ void floatBall::slotDataHaveGPsChange(MapdataHaveGP map)
     floatShowStr += "日收益:" + QString::number(allgp.todaySY) + "元" + " " + "日利率:" + todayL;
     m_floatShowLabel->setText(floatShowStr);
 
-    //修改托盘图标
-    QPixmap pixmap(128, 128);
-    pixmap.fill(Qt::transparent);
-    QPainter painter(&pixmap);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    QPen pen;
-    if (todayyl < 0) {
-        pen.setColor(Qt::green);
-    }
-    //↑
-    else {
-        pen.setColor(Qt::red);
-    }
+//    //修改托盘图标
+//    QPixmap pixmap(128, 128);
+//    pixmap.fill(Qt::transparent);
+//    QPainter painter(&pixmap);
+//    painter.setRenderHint(QPainter::Antialiasing, true);
+//    QPen pen;
+//    if (todayyl < 0) {
+//        pen.setColor(Qt::green);
+//    }
+//    //↑
+//    else {
+//        pen.setColor(Qt::red);
+//    }
 
-    pen.setWidth(10);
-    painter.setPen(pen);
-    //    painter.drawArc(pixmap.rect().adjusted(10,10,-10,-10), 0, 360*16*todayyl/100);
-    QFont font;
-    font.setPointSize(100);
-    painter.setFont(font);
-    if (todayyl < 0) {
-        painter.drawText(pixmap.rect(), Qt::AlignCenter, "↓");
-    } else {
-        painter.drawText(pixmap.rect(), Qt::AlignCenter, "↑");
-    }
-    QIcon icon(pixmap);
-    m_trayIcon->setIcon(icon);
+//    pen.setWidth(10);
+//    painter.setPen(pen);
+//    //    painter.drawArc(pixmap.rect().adjusted(10,10,-10,-10), 0, 360*16*todayyl/100);
+//    QFont font;
+//    font.setPointSize(100);
+//    painter.setFont(font);
+//    if (todayyl < 0) {
+//        painter.drawText(pixmap.rect(), Qt::AlignCenter, "↓");
+//    } else {
+//        painter.drawText(pixmap.rect(), Qt::AlignCenter, "↑");
+//    }
+//    QIcon icon(pixmap);
+//    m_trayIcon->setIcon(icon);
 }
 
 void floatBall::slotDataAllDPChange(DataAllDP data)

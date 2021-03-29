@@ -82,3 +82,6 @@ desktop.files = $$PWD/../install/stockball.desktop
 qnx: target.path = /opt/durapps/stockball
 else: unix:!android: target.path = /opt/durapps/stockball
 !isEmpty(target.path): INSTALLS += target other desktop
+
+RESOURCES += \
+    qrc.qrc
