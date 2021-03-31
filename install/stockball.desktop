@@ -1,13 +1,13 @@
 [Desktop Entry]
-Categories=stockball;
-Comment=stockball
+Categories=findfish-StockBall;
+Comment=findfish-StockBall
 Comment[zh_CN]=摸鱼股票球
 Encoding=UTF-8
-Exec=/opt/durapps/stockball/StockBall
-GenericName=stockball
+Exec=/opt/durapps/findfish-stockball/findfish-StockBall
+GenericName=findfish-StockBall
 GenericName[zh_CN]=摸鱼股票球
-Icon=/opt/durapps/stockball/stock.png
-Name=stockball
+Icon=/opt/durapps/findfish-stockball/stock.png
+Name=findfish-StockBall
 Name[zh_CN]=摸鱼股票球
 StartupNotify=false
 Terminal=false

@@ -8,7 +8,7 @@ QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = StockBall
+TARGET = findfish-StockBall
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -72,15 +72,15 @@ FORMS += \
 # Default rules for deployment.
 
 
-other.path=/opt/durapps/stockball
+other.path=/opt/durapps/findfish-stockball
 other.files= $$PWD/../install/*
 
 desktop.path = /usr/share/applications/
-desktop.files = $$PWD/../install/stockball.desktop
+desktop.files = $$PWD/../install/findfish-stockball.desktop
 
 
-qnx: target.path = /opt/durapps/stockball
-else: unix:!android: target.path = /opt/durapps/stockball
+qnx: target.path = /opt/durapps/findfish-stockball
+else: unix:!android: target.path = /opt/durapps/findfish-stockball
 !isEmpty(target.path): INSTALLS += target other desktop
 
 RESOURCES += \
