@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1033</width>
-    <height>824</height>
+    <width>1449</width>
+    <height>1066</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -95,11 +95,11 @@
              <property name="editTriggers">
               <set>QAbstractItemView::NoEditTriggers</set>
              </property>
-             <attribute name="horizontalHeaderMinimumSectionSize">
-              <number>50</number>
-             </attribute>
              <attribute name="horizontalHeaderDefaultSectionSize">
               <number>150</number>
+             </attribute>
+             <attribute name="horizontalHeaderMinimumSectionSize">
+              <number>50</number>
              </attribute>
              <column>
               <property name="text">
@@ -254,8 +254,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1033</width>
-     <height>23</height>
+     <width>1449</width>
+     <height>36</height>
     </rect>
    </property>
   </widget>

@@ -73,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     initLeftMenu();
     setWindowTitle("摸鱼股票球");
+    ui->statusBar->showMessage("github地址:https://github.com/dependon/stockball,欢迎提建议!在持有里面的股票配置可以让小球时时显示持有股票的收益和收益率!本软件纯属娱乐，只供查看");
 
 }
 

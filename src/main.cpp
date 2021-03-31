@@ -62,6 +62,8 @@ int main(int argc, char *argv[])
         return 0;
     }
     floatBall ball;
+//    ball.move(App->desktop()->screen()->rect().center() - ball.rect().center());
+    ball.move(App->desktop()->screenGeometry().width()-300,App->desktop()->screenGeometry().height()-300);
     ball.show();
 
 //    StockKlineViewData b;

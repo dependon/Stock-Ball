@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QCoreApplication>
 #include <QSqlDatabase>
+#include <QDesktopWidget>
 #include <QMutex>
 #include "dataresovle.h"
 #include "signalm.h"
