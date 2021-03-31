@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 9),pkg-config, dpkg-dev, qt5-qmake, qtbase5-dev, qt
 Standards-Version: 0.0-3
 Homepage: http://blog.mkacg.com
 
-Package: stockball
+Package: findfish-stockball
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: find fish stockball.
