@@ -1,5 +1,6 @@
 #include "floatball.h"
 #include "signalm.h"
+#include "application.h"
 #include "mainwindow.h"
 
 #include <QLabel>
@@ -45,6 +46,7 @@ floatBall::floatBall(QWidget *parent):
     m_trayIcon->show();
 
     m_mainWindow = new MainWindow();
+    m_mainWindow->move(App->desktop()->screen()->rect().center() - m_mainWindow->rect().center());
     m_mainWindow->showNormal();
     initConnect();
     initLeftMenu();

@@ -16,9 +16,9 @@
 #include <QWidget>
 #include <QDir>
 const QString SQL_PATH =   QDir::homePath() +
-                           "/.config/stockball/stockball.db";
+                           "/.config/findfish-stockball/stockball.db";
 const QString SQL_DIR =   QDir::homePath() +
-                          "/.config/stockball/";
+                          "/.config/findfish-stockball/";
 DataResovle *DataResovle::m_dataResovle = nullptr;
 DataResovle *DataResovle::instance()
 {

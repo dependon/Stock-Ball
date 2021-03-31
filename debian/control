@@ -1,4 +1,4 @@
-Source: stockball
+Source: findfish-stockball
 Section: utils
 Priority: optional
 Maintainer: kirigaya <kirigaya@mkacg.com>
@@ -9,4 +9,4 @@ Homepage: http://blog.mkacg.com
 Package: stockball
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: 摸鱼股票球.
+Description: find fish stockball.
