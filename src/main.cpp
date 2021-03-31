@@ -7,7 +7,42 @@
 
 #include <QMetaType>
 #include <QDateTime>
+#include <QDir>
+#include <QDebug>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#include <QMap>
+
+//进程单例
+bool checkOnly()
+{
+    //single
+    QString userName = QDir::homePath().section("/", -1, -1);
+    std::string path = ("/home/" + userName + "/.config/stockball/").toStdString();
+    QDir tdir(path.c_str());
+    if (!tdir.exists()) {
+        bool ret =  tdir.mkpath(path.c_str());
+        qDebug() << ret ;
+    }
+
+    path += "single";
+    int fd = open(path.c_str(), O_WRONLY | O_CREAT, 0644);
+    int flock = lockf(fd, F_TLOCK, 0);
+
+    if (fd == -1) {
+        perror("open lockfile/n");
+        return false;
+    }
+    if (flock == -1) {
+        perror("lock file error/n");
+        return false;
+    }
+    return true;
+}
 Q_DECLARE_METATYPE(MapdataHaveGP);
 Q_DECLARE_METATYPE(MapdataGP);
 Q_DECLARE_METATYPE(DataAllDP);
@@ -23,6 +58,9 @@ int main(int argc, char *argv[])
     //    MainWindow w;
     //    w.show();
 
+    if(!checkOnly()){
+        return 0;
+    }
     floatBall ball;
     ball.show();
 

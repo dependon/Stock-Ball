@@ -14,8 +14,11 @@
 #include <QTimer>
 #include <QString>
 #include <QWidget>
-
-
+#include <QDir>
+const QString SQL_PATH =   QDir::homePath() +
+                           "/.config/stockball/stockball.db";
+const QString SQL_DIR =   QDir::homePath() +
+                          "/.config/stockball/";
 DataResovle *DataResovle::m_dataResovle = nullptr;
 DataResovle *DataResovle::instance()
 {
@@ -93,23 +96,24 @@ DataResovle::DataResovle(QObject *parent) : QObject(parent)
 void DataResovle::initDB()
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
-    QFile file("test.db");
+    QFile file(SQL_PATH);
     if (file.exists()) {
-        qDebug() << "文件存在";
+        qDebug() << "file exists !!!";
     } else {
-        qDebug() << "文件不存在,正在新建文件.";
+        qDebug() << "file no exists,mkdir file!!!.";
+        QDir a;
+        a.mkdir(SQL_DIR);
         file.open(QIODevice::ReadWrite | QIODevice::Text);
         file.close();
     }
-    m_db.setDatabaseName("test.db");
-
+    m_db.setDatabaseName(SQL_PATH);
     //打开数据库
     if (! m_db.isValid()) {
-        qDebug() << "error";
+        qDebug() << "error isValid !!!";
         return;
     }
     if (!m_db.open()) {
-        qDebug() << "error";
+        qDebug() << "error open !!!";
         return;
     }
     QSqlQuery querycreate;
