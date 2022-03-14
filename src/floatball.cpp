@@ -13,7 +13,7 @@ floatBall::floatBall(QWidget *parent):
     QWidget(parent)
 {
     setStyleSheet("QLabel { color:white; padding:2px; border:1px solid white; border-radius:15px; }");
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint |Qt::Tool);
     setAttribute(Qt::WA_TranslucentBackground, true);
     setAutoFillBackground(true);
     setFixedSize(QSize(100, 50));

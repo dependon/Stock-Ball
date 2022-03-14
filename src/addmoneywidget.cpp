@@ -43,6 +43,7 @@ void addMoneyWidget::on_minecodecBtn_clicked()
         QString bumStr = "http://hq.sinajs.cn/list=" + ui->comboxCodec->currentText();
         QNetworkRequest request;
         request.setUrl(QUrl(bumStr));
+        request.setRawHeader("Referer","https://finance.sina.com.cn");
         reply = manager->get(request);
     }
 }
@@ -65,6 +66,7 @@ void addMoneyWidget::on_noMineSearchBtn_clicked()
         QString bumStr = "http://hq.sinajs.cn/list=" + num;
         QNetworkRequest request;
         request.setUrl(QUrl(bumStr));
+        request.setRawHeader("Referer","https://finance.sina.com.cn");
         reply = manager->get(request);
     }
 }

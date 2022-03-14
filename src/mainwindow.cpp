@@ -44,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(signalM::instance(), &signalM::sendDataGPsChange, this, &MainWindow::slotDataGPsChange);
     connect(signalM::instance(), &signalM::sendDataHaveGPsChange, this, &MainWindow::slotDataHaveGPsChange);
     connect(signalM::instance(), &signalM::sendDataAllDPChange, this, &MainWindow::slotDataAllDPChange);
+#ifdef Q_OS_WINDOWS
+    this->setWindowFlag(Qt::Tool,true);
+#endif
     m_shStock = new stackStock();
     m_shStock->setData("sh000001");
     m_shStock->setMinimumHeight(300);

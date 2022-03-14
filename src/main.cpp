@@ -12,9 +12,9 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
-#include <unistd.h>
 
+#include <unistd.h>
+#include <fcntl.h>
 #include <QMap>
 
 //进程单例
@@ -31,8 +31,11 @@ bool checkOnly()
 
     path += "single";
     int fd = open(path.c_str(), O_WRONLY | O_CREAT, 0644);
+#ifdef Q_OS_LINUX
     int flock = lockf(fd, F_TLOCK, 0);
-
+#else
+   int flock=0;
+#endif
     if (fd == -1) {
         perror("open lockfile/n");
         return false;

@@ -304,6 +304,7 @@ void DataResovle::sendHttpData(const QString &str)
     QString bumStr = "http://hq.sinajs.cn/list=" + str;
     QNetworkRequest request;
     request.setUrl(QUrl(bumStr));
+    request.setRawHeader("Referer","https://finance.sina.com.cn");
     reply = manager->get(request);
 }
 void DataResovle::sendData()
@@ -312,6 +313,7 @@ void DataResovle::sendData()
         QString bumStr = "http://hq.sinajs.cn/list=" + key;
         QNetworkRequest request;
         request.setUrl(QUrl(bumStr));
+        request.setRawHeader("Referer","https://finance.sina.com.cn");
         reply = manager->get(request);
     }
 }
@@ -321,6 +323,7 @@ void DataResovle::sendData2()
         QString bumStr = "http://hq.sinajs.cn/list=" + key;
         QNetworkRequest request;
         request.setUrl(QUrl(bumStr));
+        request.setRawHeader("Referer","https://finance.sina.com.cn");
         reply2 = manager2->get(request);
     }
 }
