@@ -55,7 +55,6 @@ void StockKlineViewData::setData(const QString &code, KlineEnum enumK)
 }
 void StockKlineViewData::updateData()
 {
-#ifdef Q_OS_LINUX
     if (!szSecID.isEmpty()) {
         QString str = "https://q.stock.sohu.com/hisHq?code=cn_" + szSecID + "&start=" + szDateStart + "&end=" + szDateEnd;
         QByteArray byte = str.toLatin1();
@@ -88,8 +87,6 @@ void StockKlineViewData::updateData()
         request.setUrl(QUrl(str));
         reply = manager->get(request);
     }
-#else
-#endif
 
 
 }
